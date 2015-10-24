@@ -1,12 +1,53 @@
+@brandColor: #0B91D6;
+
 body {
-    padding-left: 10px;
+
     .header {
-        color: #0B91D6;
+
+        margin: 20px 0px;
+
+        .header-buttons {
+            color: white;
+            background-color: @brandColor;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken(@brandColor, 5%);
+                
+                }
+            }
+
+        span {
+            .header-buttons;
+
+            &.img {
+                background-image: url('../media/jeffjose.jpg');
+                float: left;
+
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 50%;
+
+                height: 180px;
+                width: 180px;
+                border: 1px solid white;
+
+                margin-right: 20px;
+                }
+            }
         }
 
     .main {
         font-size: 12px;
         color: #333;
+
+        pre {
+            background: none;
+            border: none;
+            padding: 0px;
+            }
         }
    }
 
