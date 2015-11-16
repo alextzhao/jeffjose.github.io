@@ -1,25 +1,28 @@
+body {
+  background-color: #f9f7ed !important;
+}
 body .header {
   margin: 20px 0px;
 }
 body .header .header-buttons {
   color: white;
-  background-color: #0B91D6;
+  background-color: #c9423f;
   padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
 }
 body .header .header-buttons:hover {
-  background-color: #0a81be;
+  background-color: #ba3734;
 }
 body .header span {
   color: white;
-  background-color: #0B91D6;
+  background-color: #c9423f;
   padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
 }
 body .header span:hover {
-  background-color: #0a81be;
+  background-color: #ba3734;
 }
 body .header span.img {
   background-image: url('../media/jeffjose.jpg');
@@ -34,7 +37,7 @@ body .header span.img {
 }
 body .main {
   font-size: 12px;
-  color: #333;
+  color: #444;
 }
 body .main pre {
   background: none;
