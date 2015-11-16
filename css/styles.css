@@ -45,3 +45,13 @@ body .main pre {
   padding: 0px;
   border-radius: 0px;
 }
+body footer {
+  position: fixed;
+  bottom: 0px;
+  z-index: 10000;
+  width: 100%;
+}
+body footer div {
+  height: 200px;
+  background-color: #c9423f;
+}
