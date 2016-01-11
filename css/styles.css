@@ -72,8 +72,19 @@ body footer {
   bottom: 0px;
   z-index: 10000;
   width: 100%;
+  color: white;
 }
 body footer div {
-  height: 200px;
+  padding-top: 6px;
+  font-size: 12px;
+  height: 30px;
   background-color: #c9423f;
+}
+body footer div a {
+  color: white;
+  border-bottom: 1px solid white;
+}
+body footer div a:hover {
+  text-decoration: none;
+  color: white;
 }
