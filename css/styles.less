@@ -3,6 +3,8 @@
 
 body {
 
+    font-family: 'Open Sans', sans-serif;
+
     background-color: #f9f7ed;
 
     .header {
@@ -11,6 +13,7 @@ body {
 
         .header-buttons {
 
+            transition: all 100ms ease-in-out;
             color: white;
             background-color: @brandColor;
             padding: 5px 10px;
@@ -23,8 +26,27 @@ body {
                 }
             }
 
+        a {
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+
         span {
+
             .header-buttons;
+
+            &.buttons {
+                background-color: rgba(0, 0, 0, 0);
+                color: @brandColor;
+
+                &:hover {
+                    color: white;
+                    background-color: @brandColor;
+                }
+
+            }
+            
 
             &.img {
                 background-image: url('../media/jeffjose.jpg');
@@ -44,14 +66,19 @@ body {
         }
 
     .main {
-        font-size: 12px;
+        font-size: 16px;
         color: #444;
+        padding-left: 0px;
 
-        pre {
-            background: none;
-            border: none;
-            padding: 0px;
-            border-radius: 0px;
+            a {
+                border-bottom: 1px solid @brandColor;
+                color: @brandColor;
+
+                &:hover, &:focus, &:visited, &:active {
+                    text-decoration: none;
+                    color: darken(@brandColor, 5%);
+                    border-bottom: 1px solid darken(@brandColor, 5%);
+                }
             }
         }
 
