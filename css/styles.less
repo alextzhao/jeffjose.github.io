@@ -45,27 +45,31 @@ body {
                 background-color: rgba(0, 0, 0, 0);
                 color: @brandColor;
 
-
-                &:hover {
-                    color: white;
-                    background-color: @brandColor;
-
-                    //&.linkedin {
-                    //    background-color: @blue;
-                    //}
-
-                    //&.resume {
-                    //    background-color: @teal;
-                    //}
-
-                    //&.twitter {
-                    //    background-color: @purple;
-                    //}
-
-                    //&.github {
-                    //    background-color: @bluegrey;
-                    //}
+                &.active {
+                    background-color: @blue;
+                    color: white !important;
                 }
+
+                &.code, &.talks, &.resume {
+                    color: @blue;
+
+                    &:hover {
+                        color: white;
+                        background-color: @blue;
+                    }
+
+                }
+
+                &.linkedin, &.twitter, &.github {
+                    color: @bluegrey;
+                    &:hover {
+                        color: white;
+                        background-color: @bluegrey;
+                    }
+                }
+
+
+
 
             }
             

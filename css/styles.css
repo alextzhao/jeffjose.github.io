@@ -35,9 +35,31 @@ body .header span.buttons {
   background-color: rgba(0, 0, 0, 0);
   color: #c9423f;
 }
-body .header span.buttons:hover {
+body .header span.buttons.active {
+  background-color: #2196F3;
+  color: white !important;
+}
+body .header span.buttons.code,
+body .header span.buttons.talks,
+body .header span.buttons.resume {
+  color: #2196F3;
+}
+body .header span.buttons.code:hover,
+body .header span.buttons.talks:hover,
+body .header span.buttons.resume:hover {
   color: white;
-  background-color: #c9423f;
+  background-color: #2196F3;
+}
+body .header span.buttons.linkedin,
+body .header span.buttons.twitter,
+body .header span.buttons.github {
+  color: #607D8B;
+}
+body .header span.buttons.linkedin:hover,
+body .header span.buttons.twitter:hover,
+body .header span.buttons.github:hover {
+  color: white;
+  background-color: #607D8B;
 }
 body .header span.img {
   background-image: url('../media/jeffjose.jpg');
