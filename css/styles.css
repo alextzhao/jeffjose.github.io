@@ -1,9 +1,30 @@
 body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #f9f7ed;
+  background-color: white;
+}
+body .photo span {
+  background-image: url('../media/jeffjose.jpg');
+  float: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  border: 1px solid white;
+  top: 20px;
+  position: fixed;
+}
+body .photo p {
+  top: 180px;
+  left: 65px;
+  position: fixed;
+  color: #c9423f;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 3px 8px;
 }
 body .header {
-  margin: 20px 0px;
+  margin-top: 20px;
 }
 body .header .header-buttons {
   transition: all 100ms ease-in-out;
@@ -12,9 +33,6 @@ body .header .header-buttons {
   padding: 5px 10px;
   font-size: 16px;
   cursor: pointer;
-}
-body .header .header-buttons:hover {
-  background-color: #ba3734;
 }
 body .header a:hover,
 body .header a:focus {
@@ -28,27 +46,25 @@ body .header span {
   font-size: 16px;
   cursor: pointer;
 }
-body .header span:hover {
-  background-color: #ba3734;
-}
 body .header span.buttons {
   background-color: rgba(0, 0, 0, 0);
   color: #c9423f;
 }
 body .header span.buttons.active {
-  background-color: #2196F3;
-  color: white !important;
+  color: #c9423f;
+  background-color: #f6dfde;
 }
 body .header span.buttons.code,
 body .header span.buttons.talks,
-body .header span.buttons.resume {
-  color: #2196F3;
+body .header span.buttons.resume,
+body .header span.buttons.about {
+  color: #c9423f;
 }
 body .header span.buttons.code:hover,
 body .header span.buttons.talks:hover,
-body .header span.buttons.resume:hover {
-  color: white;
-  background-color: #2196F3;
+body .header span.buttons.resume:hover,
+body .header span.buttons.about:hover {
+  background-color: #f6dfde;
 }
 body .header span.buttons.linkedin,
 body .header span.buttons.twitter,
@@ -58,36 +74,26 @@ body .header span.buttons.github {
 body .header span.buttons.linkedin:hover,
 body .header span.buttons.twitter:hover,
 body .header span.buttons.github:hover {
-  color: white;
-  background-color: #607D8B;
-}
-body .header span.img {
-  background-image: url('../media/jeffjose.jpg');
-  float: left;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 50%;
-  height: 180px;
-  width: 180px;
-  border: 1px solid white;
-  margin-right: 20px;
+  background-color: #dee5e8;
 }
 body .main {
   font-size: 16px;
-  color: #444;
-  padding-left: 0px;
+  color: #333;
+  margin-top: 20px;
+  line-height: 30px;
+  padding-left: 25px;
 }
 body .main a {
-  border-bottom: 1px solid #c9423f;
-  color: #c9423f;
+  transition: all 100ms ease-in-out;
+  border-bottom: 2px solid #f0cbca;
+  color: #cf5653;
 }
 body .main a:hover,
 body .main a:focus,
-body .main a:visited,
 body .main a:active {
   text-decoration: none;
-  color: #ba3734;
-  border-bottom: 1px solid #ba3734;
+  color: #c9423f;
+  border-bottom: 2px solid #da7d7b;
 }
 body footer {
   position: fixed;

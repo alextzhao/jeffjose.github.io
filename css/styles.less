@@ -1,5 +1,8 @@
 @brandColor: #0B91D6;
 @brandColor: #c9423f;
+@fontColor: #333;
+@bgColor: #f9f7ed;
+@bgColor: white;
 
 @blue: #2196F3;
 @teal: #009688;
@@ -10,11 +13,42 @@ body {
 
     font-family: 'Open Sans', sans-serif;
 
-    background-color: #f9f7ed;
+    background-color: @bgColor;
+
+    .photo {
+
+        span {
+
+            background-image: url('../media/jeffjose.jpg');
+            float: left;
+
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 50%;
+
+            height: 150px;
+            width: 150px;
+            border: 1px solid white;
+
+            top: 20px;
+            position: fixed;
+        }
+
+        p {
+            top: 180px;
+            left: 65px;
+            position: fixed;
+            color: @brandColor;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 3px 8px;
+        }
+
+        }
 
     .header {
 
-        margin: 20px 0px;
+        margin-top: 20px;
 
         .header-buttons {
 
@@ -24,11 +58,6 @@ body {
             padding: 5px 10px;
             font-size: 16px;
             cursor: pointer;
-
-            &:hover {
-                background-color: darken(@brandColor, 5%);
-                
-                }
             }
 
         a {
@@ -46,25 +75,25 @@ body {
                 color: @brandColor;
 
                 &.active {
-                    background-color: @blue;
-                    color: white !important;
+                    color: @brandColor;
+                    background-color: lighten(@brandColor, 40%);
                 }
 
-                &.code, &.talks, &.resume {
-                    color: @blue;
+                &.code, &.talks, &.resume,&.about {
+                    color: @brandColor;
 
                     &:hover {
-                        color: white;
-                        background-color: @blue;
+                        background-color: lighten(@brandColor, 40%);
                     }
 
                 }
 
                 &.linkedin, &.twitter, &.github {
+
                     color: @bluegrey;
+
                     &:hover {
-                        color: white;
-                        background-color: @bluegrey;
+                        background-color: lighten(@bluegrey, 43%);
                     }
                 }
 
@@ -72,38 +101,27 @@ body {
 
 
             }
-            
-
-            &.img {
-                background-image: url('../media/jeffjose.jpg');
-                float: left;
-
-                background-repeat: no-repeat;
-                background-size: cover;
-                border-radius: 50%;
-
-                height: 180px;
-                width: 180px;
-                border: 1px solid white;
-
-                margin-right: 20px;
-                }
             }
         }
 
     .main {
         font-size: 16px;
-        color: #444;
-        padding-left: 0px;
+        color: @fontColor;
+        margin-top: 20px;
+        line-height: 30px;
+        padding-left: 25px;
 
             a {
-                border-bottom: 1px solid @brandColor;
-                color: @brandColor;
 
-                &:hover, &:focus, &:visited, &:active {
+                transition: all 100ms ease-in-out;
+                border-bottom: 2px solid lighten(@brandColor, 35%);
+
+                color: lighten(@brandColor, 5%);
+
+                &:hover, &:focus, &:active {
                     text-decoration: none;
-                    color: darken(@brandColor, 5%);
-                    border-bottom: 1px solid darken(@brandColor, 5%);
+                    color: @brandColor;
+                    border-bottom: 2px solid lighten(@brandColor, 15%);
                 }
             }
         }
