@@ -95,10 +95,8 @@ body {
         }
 
     .main {
-        font-size: 16px;
         color: @fontColor;
         margin-top: 20px;
-        line-height: 30px;
         padding-left: 25px;
 
             a {
@@ -115,6 +113,39 @@ body {
                 }
             }
         }
+
+    .index {
+        .main;
+        line-height: 30px;
+        font-size: 16px;
+    }
+
+    .code {
+        .main;
+
+        .blurb {
+            line-height: 30px;
+            font-size: 16px;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            span {
+                color: lighten(@fontColor, 50%);
+                margin-left: 10px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+        }
+
+        .item {
+            margin-bottom: 30px;
+        }
+    }
+
+    .talks {
+        .main;
+    }
 
    footer {
        position: fixed;

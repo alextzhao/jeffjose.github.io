@@ -69,10 +69,8 @@ body .header span.buttons.github:hover {
   background-color: #dee5e8;
 }
 body .main {
-  font-size: 16px;
   color: #333;
   margin-top: 20px;
-  line-height: 30px;
   padding-left: 25px;
 }
 body .main a {
@@ -83,6 +81,75 @@ body .main a {
 body .main a:hover,
 body .main a:focus,
 body .main a:active {
+  text-decoration: none;
+  color: #c9423f;
+  border-bottom: 2px solid #da7d7b;
+}
+body .index {
+  color: #333;
+  margin-top: 20px;
+  padding-left: 25px;
+  line-height: 30px;
+  font-size: 16px;
+}
+body .index a {
+  transition: all 100ms ease-in-out;
+  border-bottom: 2px solid #f0cbca;
+  color: #cf5653;
+}
+body .index a:hover,
+body .index a:focus,
+body .index a:active {
+  text-decoration: none;
+  color: #c9423f;
+  border-bottom: 2px solid #da7d7b;
+}
+body .code {
+  color: #333;
+  margin-top: 20px;
+  padding-left: 25px;
+}
+body .code a {
+  transition: all 100ms ease-in-out;
+  border-bottom: 2px solid #f0cbca;
+  color: #cf5653;
+}
+body .code a:hover,
+body .code a:focus,
+body .code a:active {
+  text-decoration: none;
+  color: #c9423f;
+  border-bottom: 2px solid #da7d7b;
+}
+body .code .blurb {
+  line-height: 30px;
+  font-size: 16px;
+}
+body .code h3 {
+  margin-bottom: 20px;
+}
+body .code h3 span {
+  color: #b3b3b3;
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+body .code .item {
+  margin-bottom: 30px;
+}
+body .talks {
+  color: #333;
+  margin-top: 20px;
+  padding-left: 25px;
+}
+body .talks a {
+  transition: all 100ms ease-in-out;
+  border-bottom: 2px solid #f0cbca;
+  color: #cf5653;
+}
+body .talks a:hover,
+body .talks a:focus,
+body .talks a:active {
   text-decoration: none;
   color: #c9423f;
   border-bottom: 2px solid #da7d7b;
