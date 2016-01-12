@@ -27,8 +27,9 @@ body .header {
   margin-top: 20px;
 }
 body .header a:hover,
-body .header:focus {
+body .header a:focus {
   text-decoration: none;
+  outline: none;
 }
 body .header span {
   transition: all 100ms ease-in-out;
