@@ -50,7 +50,11 @@ body {
 
         margin-top: 20px;
 
-        .header-buttons {
+        a:hover, &:focus {
+            text-decoration: none;
+        }
+
+        span {
 
             transition: all 100ms ease-in-out;
             color: white;
@@ -58,17 +62,6 @@ body {
             padding: 5px 10px;
             font-size: 16px;
             cursor: pointer;
-            }
-
-        a {
-            &:hover, &:focus {
-                text-decoration: none;
-            }
-        }
-
-        span {
-
-            .header-buttons;
 
             &.buttons {
                 background-color: rgba(0, 0, 0, 0);
@@ -96,11 +89,8 @@ body {
                         background-color: lighten(@bluegrey, 43%);
                     }
                 }
-
-
-
-
-            }
+    
+              }
             }
         }
 

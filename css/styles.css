@@ -26,16 +26,8 @@ body .photo p {
 body .header {
   margin-top: 20px;
 }
-body .header .header-buttons {
-  transition: all 100ms ease-in-out;
-  color: white;
-  background-color: #c9423f;
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
 body .header a:hover,
-body .header a:focus {
+body .header:focus {
   text-decoration: none;
 }
 body .header span {
