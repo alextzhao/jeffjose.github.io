@@ -167,6 +167,8 @@ body .talks {
   color: #333;
   margin-top: 20px;
   padding-left: 25px;
+  line-height: 30px;
+  font-size: 16px;
 }
 body .talks a {
   transition: all 100ms ease-in-out;
