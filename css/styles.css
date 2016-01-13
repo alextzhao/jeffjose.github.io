@@ -2,6 +2,19 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: white;
 }
+@media (max-width: 991px) {
+  body .col-xs-offset-2 {
+    margin-left: 0% !important;
+  }
+}
+@media (max-width: 991px) {
+  body .photo {
+    width: 0%;
+  }
+  body .photo span {
+    display: none;
+  }
+}
 body .photo span {
   background-image: url('../media/jeffjose.jpg');
   float: left;
@@ -15,13 +28,12 @@ body .photo span {
   position: fixed;
 }
 body .photo p {
-  top: 180px;
-  left: 65px;
-  position: fixed;
+  position: absolute;
+  margin-left: 10.6666%;
   color: #c9423f;
   font-weight: bold;
   font-size: 16px;
-  padding: 3px 8px;
+  bottom: -30%;
 }
 body .header {
   margin-top: 20px;

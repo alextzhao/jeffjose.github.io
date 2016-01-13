@@ -15,7 +15,23 @@ body {
 
     background-color: @bgColor;
 
+    .col-xs-offset-2 {
+
+        @media (max-width: 991px) {
+            margin-left: 0% !important;
+        }
+
+    }
+
     .photo {
+
+        @media (max-width: 991px) {
+            width: 0%;
+
+            span {
+                display: none;
+            }
+        }
 
         span {
 
@@ -32,16 +48,16 @@ body {
 
             top: 20px;
             position: fixed;
+
         }
 
         p {
-            top: 180px;
-            left: 65px;
-            position: fixed;
+            position: absolute;
+            margin-left: 10.6666%;
             color: @brandColor;
             font-weight: bold;
             font-size: 16px;
-            padding: 3px 8px;
+            bottom: -30%;
         }
 
         }
