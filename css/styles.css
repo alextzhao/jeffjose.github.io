@@ -7,11 +7,16 @@ body {
     margin-left: 0% !important;
   }
 }
+@media (max-width: 991px) {
+  body .col-xs-10 {
+    width: 100%;
+  }
+}
 body .brand-smallscreen {
   color: #c9423f;
   font-weight: bold;
   font-size: 16px;
-  margin-left: -15px;
+  margin-left: 15px;
   margin-bottom: 30px;
 }
 @media (min-width: 991px) {
