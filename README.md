@@ -1,2 +1,3 @@
-// http://jeffreyjose.com. 
-// Handcreated using html and less, in vim.
+http://jeffreyjose.com.
+
+Handcreated using html and less, in vim.
