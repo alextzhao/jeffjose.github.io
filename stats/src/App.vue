@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <curve></curve>
     <vline></vline>
   </div>
 </template>
@@ -7,10 +8,11 @@
 <script lang="coffee">
 
 Vline = require './components/Line'
+Curve = require './components/Curve'
 
 module.exports =
   name: 'app',
-  components: { Vline }
+  components: { Vline, Curve }
 
 </script>
 

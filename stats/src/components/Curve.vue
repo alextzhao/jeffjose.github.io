@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>{{ msg }}</h1>
+        <h1>{{ title }}</h1>
         <svg width="500" height="270">
             <g style="transform: translate(0, 20px)">
                 <path :d="line" stroke="red" stroke-width="2" fill='none'/>
@@ -12,12 +12,15 @@
 <script lang="coffee">
 
 d3 = require 'd3'
+jstat = require 'jstat'
+
+[alpha, beta] = [40, 40]
 
 module.exports =
-  name: 'vline',
+  name: 'curve',
   data: () ->
-    msg: 'Hi!'
-    data: [1, 10, 23, 30, 33, 20]
+    title: 'Generic Curve'
+    data: (jstat.jStat.beta.pdf(x/100, alpha, beta) for x in [1..100])
     line: ''
   mounted: () ->
       @calculatePath()
