@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <line></line>
+    <vline></vline>
   </div>
 </template>
 
 <script lang="coffee">
-Line = require './components/Line'
+
+Vline = require './components/Line'
 
 module.exports =
   name: 'app',
-  components: { Line }
+  components: { Vline }
 
 </script>
 
