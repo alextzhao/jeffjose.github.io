@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <hello></hello>
+    <line></line>
   </div>
 </template>
 
-<script>
-import Hello from './components/Hello'
+<script lang="coffee">
+Line = require './components/Line'
 
-export default {
+module.exports =
   name: 'app',
-  components: {
-    Hello
-  }
-}
+  components: { Line }
+
 </script>
 
 <style>
