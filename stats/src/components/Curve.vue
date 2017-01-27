@@ -16,7 +16,6 @@ d3 = require 'd3'
 INFINITY = 100
 YMAX = 4
 
-
 module.exports =
 
   name: 'curve',
@@ -38,8 +37,8 @@ module.exports =
 
   mounted: () ->
 
-      @svg   = d3.select('svg', @$el)
-      @curve = d3.select('g.wrapper')
+      @svg   = d3.select(@$el).select('svg')
+      @curve = @svg.select('g.wrapper')
 
       @draw()
 
@@ -48,6 +47,7 @@ module.exports =
         values.map (x) -> if x is Infinity then INFINITY else x
 
     draw: () ->
+      console.log('draw!')
       @setupSVG()
       @scale = @setupScales()
       @drawPath()
@@ -72,8 +72,8 @@ module.exports =
         x.domain(d3.extent(@data, (d, i) => i/100))
 
         # Hardcoding YMAX
-        y.domain([0, YMAX])
-        #y.domain([0, d3.max(@data, (d) => d)])
+        #y.domain([0, YMAX])
+        y.domain([0, d3.max(@data, (d) => d)])
 
         { x, y }
 
