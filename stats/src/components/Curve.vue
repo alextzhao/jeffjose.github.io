@@ -119,29 +119,45 @@ module.exports =
 
         @line = path(@data)
 
+        # If points are being displayed, path needs to be transparent
+        @curve.selectAll('path.line')
+            .classed('transparent', @points)
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 
+@axisColor: #9E9E9E;
+//@lineColor: #E91E63;
+@lineColor: #FF7043;
+
 path.line {
     stroke-width: 2;
-    stroke: #F44336;
+    stroke: @lineColor;
     fill: none;
 }
 
 g.axis {
     path, line {
-        stroke: #455A64;
+        stroke: @axisColor;
     }
 
     text {
-        fill: #455A64;
+        fill: @axisColor;
+    }
+
+    &.yaxis .tick * , &.xaxis .tick * {
+        stroke: none;
     }
 }
 
+.transparent {
+    stroke-opacity: 0.2;
+}
+
 circle.points {
-    fill: #F44336;
-    fill-opacity: 0.6;
+    fill: @lineColor;
+    //fill-opacity: 0.6;
 }
 </style>

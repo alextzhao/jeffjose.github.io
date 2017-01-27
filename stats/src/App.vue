@@ -1,13 +1,8 @@
 <template>
   <div id="app">
       <div class="panel">
-          {{beta.alpha}}
-          </br>
-          <input type="range" v-model.number="beta.alpha" min=0 max=20 step="0.01">
-          </br>
-          {{beta.beta}}
-          </br>
-          <input type="range" v-model.number="beta.beta" min=0 max=20 step="0.01">
+          <slider v-model="beta.alpha" range="[0, 20, 0.01]"></slider>
+          <slider v-model="beta.beta" range="[0, 20, 0.01]"></slider>
           <curve :values="betavalues" width="800" height="400" title="Beta Distribution"></curve>
       </div>
 
@@ -56,6 +51,7 @@
 <script lang="coffee">
 
 Curve = require './components/Curve'
+Slider = require './components/Slider'
 
 jstat = require 'jstat'
 
@@ -65,7 +61,7 @@ jstat = require 'jstat'
 
 module.exports =
   name: 'app',
-  components: {Curve}
+  components: {Curve, Slider}
   data: () ->
     beta:
         alpha: 1.53
