@@ -37,7 +37,7 @@
           {{poisson.lambda}}
           </br>
           <input type="range" v-model.number="poisson.lambda" min=0 max=10 step="0.01">
-          <curve :values="poissonvalues" width="800" height="400" title="Poisson Distribution"></curve>
+          <curve :values="poissonvalues" width="800" height="400" title="Poisson Distribution" :points="true"></curve>
       </div>
 
       <div class="panel">
@@ -48,7 +48,7 @@
           {{negbin.p}}
           </br>
           <input type="range" v-model.number="negbin.p" min=0 max=1 step="0.01">
-          <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution"></curve>
+          <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution" :points="true"></curve>
       </div>
   </div>
 </template>
@@ -75,13 +75,12 @@ module.exports =
         scale: 1
     normal:
         mean: .5
-        std: .12
+        std: .10
     poisson:
-        k: 5
-        lambda: .12
+        lambda: 5.5
     negbin:
-        r: 1
-        p:.5
+        r: 4
+        p:.3
 
   computed:
       betavalues: () ->
@@ -91,7 +90,7 @@ module.exports =
       normalvalues: () ->
           (jstat.jStat.normal.pdf(x/100, @normal.mean, @normal.std) for x in [0...100])
       poissonvalues: () ->
-          (jstat.jStat.poisson.pdf(x, @poisson.lambda) for x in [0...100])
+          (jstat.jStat.poisson.pdf(x, @poisson.lambda) for x in [0...20])
       negbinvalues: () ->
           (jstat.jStat.negbin.pdf(x, @negbin.r, @negbin.p) for x in [0...100])
 
