@@ -24,7 +24,7 @@ module.exports =
   methods:
     getScales: () ->
 
-          x = d3.scaleTime().range([0, 430])
+          x = d3.scaleLinear().range([0, 430])
           y = d3.scaleLinear().range([210, 0])
           d3.axisLeft().scale(x)
           d3.axisBottom().scale(y)
