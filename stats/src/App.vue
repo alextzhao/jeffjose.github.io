@@ -1,48 +1,31 @@
 <template>
   <div id="app">
       <div class="panel">
-          <slider v-model="beta.alpha" range="[0, 20, 0.01]"></slider>
-          <slider v-model="beta.beta" range="[0, 20, 0.01]"></slider>
+          <slider v-model="beta.alpha" label="alpha" min=0 max=20 step=0.01></slider>
+          <slider v-model="beta.beta" label="beta" min=0 max=20 step=0.01></slider>
           <curve :values="betavalues" width="800" height="400" title="Beta Distribution"></curve>
       </div>
 
       <div class="panel">
-          {{gamma.shape}}
-          </br>
-          <input type="range" v-model.number="gamma.shape" min=0 max=1 step="0.01">
-          </br>
-          {{gamma.scale}}
-          </br>
-          <input type="range" v-model.number="gamma.scale" min=0 max=20 step="0.01">
+          <slider v-model="gamma.shape" label="shape" min=0 max=1 step=0.01></slider>
+          <slider v-model="gamma.scale" label="scale" min=0 max=20 step=0.01></slider>
           <curve :values="gammavalues" width="800" height="400" title="Gamma Distribution"></curve>
       </div>
 
       <div class="panel">
-          {{normal.mean}}
-          </br>
-          <input type="range" v-model.number="normal.mean" min=0 max=1 step="0.01">
-          </br>
-          {{normal.std}}
-          </br>
-          <input type="range" v-model.number="normal.std" min=0 max=1 step="0.01">
+          <slider v-model="normal.mean" label="mean" min=0 max=1 step=0.01></slider>
+          <slider v-model="normal.std"  label="std" min=0 max=1 step=0.01></slider>
           <curve :values="normalvalues" width="800" height="400" title="Normal Distribution"></curve>
       </div>
 
       <div class="panel">
-          {{poisson.lambda}}
-          </br>
-          <input type="range" v-model.number="poisson.lambda" min=0 max=10 step="0.01">
+          <slider v-model="poisson.lambda" label="lambda" min=0 max=10 step=0.01></slider>
           <curve :values="poissonvalues" width="800" height="400" title="Poisson Distribution" :points="true"></curve>
       </div>
 
       <div class="panel">
-          {{negbin.r}}
-          </br>
-          <input type="range" v-model.number="negbin.r" min=0 max=10 step="1">
-          </br>
-          {{negbin.p}}
-          </br>
-          <input type="range" v-model.number="negbin.p" min=0 max=1 step="0.01">
+          <slider v-model="negbin.r" label="r" min=0 max=10 step=1></slider>
+          <slider v-model="negbin.p" label="p" min=0 max=1 step=0.01></slider>
           <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution" :points="true"></curve>
       </div>
   </div>
@@ -88,7 +71,9 @@ module.exports =
       poissonvalues: () ->
           (jstat.jStat.poisson.pdf(x, @poisson.lambda) for x in [0...20])
       negbinvalues: () ->
-          (jstat.jStat.negbin.pdf(x, @negbin.r, @negbin.p) for x in [0...100])
+          y = (jstat.jStat.negbin.pdf(x, @negbin.r, @negbin.p) for x in [0...100])
+          console.log(@negbin.r)
+          y
 
 </script>
 
