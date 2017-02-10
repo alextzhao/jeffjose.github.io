@@ -35,7 +35,7 @@ module.exports =
         top: 30
         right: 30
         bottom: 30
-        left: 30
+        left: 40
 
   watch:
       values: (values) ->
@@ -59,9 +59,7 @@ module.exports =
             else if _.isNaN(x)
                 return 0
             else
-                return x
-
-
+                return _.max([x, 0])
 
     draw: () ->
       @setupSVG()
@@ -81,10 +79,15 @@ module.exports =
           .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
     setupScales: () ->
-        x = d3.scaleLinear().range([0, @dims.width])
-        y = d3.scaleLinear().range([@dims.height, 0])
 
-        x.domain(d3.extent(@data, (d, i) => i/@data.length))
+        if @points
+            x = d3.scaleLinear().range([0, @dims.width])
+            x.domain(d3.extent(@data, (d, i) => i))
+        else
+            x = d3.scaleLinear().range([0, @dims.width])
+            x.domain(d3.extent(@data, (d, i) => i/@data.length))
+
+        y = d3.scaleLinear().range([@dims.height, 0])
 
         # Hardcoding YMAX
         #y.domain([0, YMAX])
@@ -105,10 +108,26 @@ module.exports =
 
 
     drawGraph: () ->
-        @drawPath()
 
         if @points
-            @drawPoints()
+            #@drawPoints()
+            @drawBars()
+        else
+            @drawPath()
+
+    drawBars: () ->
+        @curve.selectAll('rect.bars').remove()
+
+        rects = @curve.selectAll('rect')
+            .data(@data, (d, i) -> d)
+            .enter().append('rect')
+                .attr('class', 'bars')
+                .attr('fill', '#FF7043')
+                #.attr('width', @scale.x.bandwidth())
+                .attr('width', '2')
+                .attr('x', (d, i) => @scale.x(i))
+                .attr('y', (d, i) => @scale.y(d))
+                .attr('height', (d, i) => @dims.height - @scale.y(d))
 
     drawPoints: () ->
         @curve.selectAll('circle.points').remove()

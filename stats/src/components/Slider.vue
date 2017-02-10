@@ -24,7 +24,7 @@ _  = require 'underscore'
 
 module.exports =
     name: 'slider'
-    props: ['label', 'value', 'max', 'min', 'step']
+    props: ['label', 'value', 'max', 'min', 'step', 'bounded']
     methods:
         update: (value) ->
 
@@ -35,16 +35,24 @@ module.exports =
             else
                 number = _number
 
+            if @bounded
+                if number > @max
+                    number = _.min([@max, number])
+                else if number < @min
+                    number = _.max([@min, number])
+
             @$emit('input', number)
 
         increment: () ->
             _newValue = Number(@value) + Number(@step)
             newValue = Math.round(100*_newValue) / 100
+
             @update(newValue)
 
         decrement: () ->
             _newValue = Number(@value) - Number(@step)
             newValue = Math.round(100*_newValue) / 100
+
             @update(newValue)
 
         wheel: (direction) ->
