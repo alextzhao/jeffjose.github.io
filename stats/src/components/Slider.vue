@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" @wheel.prevent="wheel($event.wheelDelta)">
       <div class="left">
           <span class="label"><p>{{label}}</p></span>
           <input class="slider" type="range" v-bind:value.number="value" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
@@ -7,34 +7,67 @@
 
       <div class="right">
           <span class="text">
-              <input class="value" v-bind:value.number="value" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
+              <input class="value" v-bind:value.number="value" @wheel="wheel($event.wheelDelta)" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
           </span>
           <span class="buttons">
-              <input class="minus" type="button" value="-"></input>
-              <input class="plus" type="button" value="+"></input>
+              <input class="plus" type="button" value="+" @click.prevent="increment"></input>
+              <input class="minus" type="button" value="-" @click.prevent="decrement"></input>
           </span>
      </div>
     </div>
 </template>
 
 <script lang="coffee">
+
+d3 = require 'd3'
+_  = require 'underscore'
+
 module.exports =
     name: 'slider'
     props: ['label', 'value', 'max', 'min', 'step']
     methods:
         update: (value) ->
-            console.log(Number(value))
-            @$emit('input', Number(value))
 
-</scripts>
+            _number = Number(value)
+
+            if _.isNaN(_number)
+                number = 0
+            else
+                number = _number
+
+            @$emit('input', number)
+
+        increment: () ->
+            _newValue = Number(@value) + Number(@step)
+            newValue = Math.round(100*_newValue) / 100
+            @update(newValue)
+
+        decrement: () ->
+            _newValue = Number(@value) - Number(@step)
+            newValue = Math.round(100*_newValue) / 100
+            @update(newValue)
+
+        wheel: (direction) ->
+
+            if direction > 0
+                @increment()
+            if direction < 0
+                @decrement()
+
+</script>
 
 <style lang="less">
 
 @textColor: #9E9E9E;
 
 .wrapper {
-    width: 250px;
-    margin-top: 20px;
+    width: 200px;
+    margin: 10px;
+    padding: 10px 0px;
+
+    &:hover {
+        background-color: #FBFBFB;
+    }
 }
 
 

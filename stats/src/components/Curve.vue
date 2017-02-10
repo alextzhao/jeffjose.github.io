@@ -12,6 +12,7 @@
 <script lang="coffee">
 
 d3 = require 'd3'
+_ = require 'underscore'
 
 INFINITY = 100
 YMAX = 4
@@ -51,7 +52,16 @@ module.exports =
 
   methods:
     massage: (values) ->
-        values.map (x) -> if x is Infinity then INFINITY else x
+         values.map (x) ->
+
+            if (x is Infinity) or (x is -Infinity)
+                return INFINITY
+            else if _.isNaN(x)
+                return 0
+            else
+                return x
+
+
 
     draw: () ->
       @setupSVG()
@@ -103,7 +113,6 @@ module.exports =
     drawPoints: () ->
         @curve.selectAll('circle.points').remove()
 
-        console.log('points')
         circles = @curve.selectAll('circle')
             .data(@data, (d, i) -> d)
             .enter().append('circle')

@@ -28,6 +28,13 @@
           <slider v-model="negbin.p" label="p" min=0 max=1 step=0.01></slider>
           <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution" :points="true"></curve>
       </div>
+
+      <div class="panel">
+          <slider v-model="bin.n" label="r" min=0 max=100 step=1></slider>
+          <slider v-model="bin.p" label="p" min=0 max=1 step=0.01></slider>
+          <curve :values="binvalues" width="800" height="400" title="Binomial Distribution" :points="true"></curve>
+      </div>
+
   </div>
 </template>
 
@@ -47,7 +54,7 @@ module.exports =
   components: {Curve, Slider}
   data: () ->
     beta:
-        alpha: 1.53
+        alpha: .53
         beta: .73
     gamma:
         shape:.5
@@ -60,10 +67,13 @@ module.exports =
     negbin:
         r: 4
         p:.3
+    bin:
+        n: 100
+        p:.8
 
   computed:
       betavalues: () ->
-          (jstat.jStat.beta.pdf(x/100, @beta.alpha, @beta.beta) for x in [0...100])
+          jstat.jStat.beta.pdf(x/100, @beta.alpha, @beta.beta) for x in [0...100]
       gammavalues: () ->
           (jstat.jStat.gamma.pdf(x/100, @gamma.shape, @gamma.scale) for x in [0...100])
       normalvalues: () ->
@@ -71,9 +81,9 @@ module.exports =
       poissonvalues: () ->
           (jstat.jStat.poisson.pdf(x, @poisson.lambda) for x in [0...20])
       negbinvalues: () ->
-          y = (jstat.jStat.negbin.pdf(x, @negbin.r, @negbin.p) for x in [0...100])
-          console.log(@negbin.r)
-          y
+          jstat.jStat.negbin.pdf(x, @negbin.r, @negbin.p) for x in [0...100]
+      binvalues: () ->
+          jstat.jStat.binomial.pdf(x, @bin.n, @bin.p) for x in [0...100]
 
 </script>
 
