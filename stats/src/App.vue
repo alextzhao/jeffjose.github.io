@@ -139,7 +139,7 @@ module.exports =
       betavalues: () ->
           (jstat.jStat.beta.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @beta)
       gammavalues: () ->
-          (jstat.jStat.gamma.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @gamma)
+          (jstat.jStat.gamma.pdf(x/500, params[0].data, params[1].data) for x in [0...500] for params in @gamma)
       normalvalues: () ->
           (jstat.jStat.normal.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @normal)
       poissonvalues: () ->
@@ -149,7 +149,7 @@ module.exports =
       binvalues: () ->
           (jstat.jStat.binomial.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @bin)
       chisqvalues: () ->
-          (jstat.jStat.chisquare.pdf(x, params[0].data) for x in [0...50] for params in @chisq)
+          (jstat.jStat.chisquare.pdf(x, params[0].data) for x in [0...100] for params in @chisq)
       expvalues: () ->
           (jstat.jStat.exponential.pdf(x, params[0].data) for x in [0...100] for params in @exp)
 

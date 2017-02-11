@@ -75,7 +75,9 @@ module.exports =
 
       @drawAxis()
 
-    redraw: () ->
+    redraw: (axis=false) ->
+      if axis
+          @drawAxis()
       @drawGraph()
 
     setupSVG: () ->
@@ -83,6 +85,13 @@ module.exports =
             width: @svg.attr('width') - @margin.left - @margin.right
             height: @svg.attr('height') - @margin.top - @margin.bottom
 
+        @svg
+          .on 'wheel', (e) =>
+              d3.event.stopPropagation()
+              d3.event.preventDefault()
+              console.log('svg')
+              @zoomScales(x=d3.event.wheelDeltaY, y=d3.event.wheelDeltaY)
+              @redraw(true)
         @curve
           .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
@@ -102,19 +111,52 @@ module.exports =
         # Hardcoding YMAX
         #y.domain([0, YMAX])
         y.domain([0, d3.min([YMAX, d3.max(sampleData, (d) => d)])])
+        #y.domain([0, d3.max(sampleData, (d) => d)])
 
         { x, y }
 
+    zoomScales: (x=0, y=0) ->
+
+        xTick = @scale.x.ticks()[1] - @scale.x.ticks()[0]
+        xMax  = @scale.x.domain()[1]
+
+        yTick = @scale.y.ticks()[1] - @scale.y.ticks()[0]
+        yMax  = @scale.y.domain()[1]
+
+        if y > 0
+            @scale.y.domain([0, yMax + yTick])
+        else if y < 0
+            @scale.y.domain([0, yMax - yTick])
+
+        if x > 0
+            @scale.x.domain([0, xMax + xTick])
+        else if x < 0
+            @scale.x.domain([0, xMax - xTick])
+
     drawAxis: () ->
+
+        @curve.selectAll('.axis').remove()
 
         @curve.append('g')
             .attr('transform', "translate(0, #{@dims.height})")
             .attr('class', 'axis xaxis')
             .call(d3.axisBottom(@scale.x))
+            .on 'wheel', (e) =>
+                console.log('xaxis')
+                d3.event.stopPropagation()
+                d3.event.preventDefault()
+                @zoomScales(x=d3.event.wheelDeltaY, y=0)
+                @redraw(true)
 
         @curve.append('g')
             .attr('class', 'axis yaxis')
             .call(d3.axisLeft(@scale.y).ticks(5))
+            .on 'wheel', (e) =>
+                console.log('yaxis')
+                d3.event.stopPropagation()
+                d3.event.preventDefault()
+                @zoomScales(x=0, y=d3.event.wheelDeltaY)
+                @redraw(true)
 
 
     drawGraph: () ->
@@ -182,8 +224,21 @@ rect.bars {
 }
 
 g.axis {
+    transition: all ease-in-out 100ms;
+    &:hover {
+        path, line {
+            stroke: darken(@axisColor, 20%);
+        }
+
+        text {
+            fill: darken(@axisColor, 20%);
+        }
+    }
+
     path, line {
         stroke: @axisColor;
+
+
     }
 
     text {
