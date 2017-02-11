@@ -20,7 +20,7 @@
 <script lang="coffee">
 
 d3 = require 'd3'
-_  = require 'underscore'
+_  = require 'lodash'
 
 module.exports =
     name: 'slider'
@@ -66,15 +66,17 @@ module.exports =
 
 <style lang="less">
 
-@textColor: #9E9E9E;
+@textColorDark: #333333;
+@textColorLight: #FFFFFF;
 
 .wrapper {
     width: 200px;
     margin: 10px;
     padding: 10px 0px;
+    border: 1px solid rgba(0, 0, 0, 0);
 
     &:hover {
-        background-color: #FBFBFB;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 }
 
@@ -82,13 +84,14 @@ module.exports =
 .left {
     float: left;
     height: 20px;
+
     .label {
         font-size: 10px;
         display: inline-block;
         height: 100%;
         vertical-align: middle;
         text-align: center;
-        color: @textColor;
+        color: @textColorLight;
         float: left;
         font-size: 10px;
         padding: 0px 3px;
@@ -120,7 +123,7 @@ module.exports =
             float: left;
             border: none;
             padding: 0px;
-            color: @textColor;
+            color: @textColorDark;
             width: 26px;
             height: 20px;
 
@@ -144,10 +147,10 @@ module.exports =
             display: block;
             font-size: 10px;
 
-            color: @textColor;
+            color: @textColorDark;
 
             &:hover {
-                background-color: green;
+                background-color: darken(white, 40%);
             }
         }
 

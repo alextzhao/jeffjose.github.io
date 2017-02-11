@@ -3,7 +3,7 @@
         <h1>{{ title }}</h1>
         <svg :height="height" :width="width">
             <g class="wrapper">
-                <path class="line" :d="line"/>
+                <path v-for="line, i in lines" :stroke="colors(i)" class="line" :d="line"/>
             </g>
         </svg>
     </div>
@@ -11,15 +11,17 @@
 
 <script lang="coffee">
 
-d3 = require 'd3'
-_ = require 'underscore'
+d3       = require 'd3'
+_        = require 'lodash'
 
-INFINITY = 100
+Utils   = require '../utils/Utils'
+
 YMAX = 4
 
 module.exports =
 
   name: 'curve',
+  mixins: [Utils]
   props: {
     title: String
     height: String
@@ -29,7 +31,7 @@ module.exports =
         default: false
     }
   data: () ->
-    line: ''
+    lines: ''
     data: @massage(@values)
     margin:
         top: 30
@@ -51,20 +53,25 @@ module.exports =
       @draw()
 
   methods:
-    massage: (values) ->
-         values.map (x) ->
 
-            if (x is Infinity) or (x is -Infinity)
-                return INFINITY
-            else if _.isNaN(x)
-                return 0
-            else
-                return _.max([x, 0])
+    massage: (values) ->
+
+        for value, i in values
+            value.map (x) ->
+
+               if (x is Infinity) or (x is -Infinity)
+                   return @infinity
+               else if _.isNaN(x)
+                   return 0
+               else
+                   return _.max([x, 0])
 
     draw: () ->
       @setupSVG()
       @scale = @setupScales()
+
       @drawGraph()
+
       @drawAxis()
 
     redraw: () ->
@@ -80,18 +87,20 @@ module.exports =
 
     setupScales: () ->
 
+        # Use the first item to setup x axis
+        sampleData = @data[0]
         if @points
             x = d3.scaleLinear().range([0, @dims.width])
-            x.domain(d3.extent(@data, (d, i) => i))
+            x.domain(d3.extent(sampleData, (d, i) => i))
         else
             x = d3.scaleLinear().range([0, @dims.width])
-            x.domain(d3.extent(@data, (d, i) => i/@data.length))
+            x.domain(d3.extent(sampleData, (d, i) => i/sampleData.length))
 
         y = d3.scaleLinear().range([@dims.height, 0])
 
         # Hardcoding YMAX
         #y.domain([0, YMAX])
-        y.domain([0, d3.min([YMAX, d3.max(@data, (d) => d)])])
+        y.domain([0, d3.min([YMAX, d3.max(sampleData, (d) => d)])])
 
         { x, y }
 
@@ -110,46 +119,47 @@ module.exports =
     drawGraph: () ->
 
         if @points
-            #@drawPoints()
-            @drawBars()
+            for data, i in @data
+                @drawBars(data, i)
         else
-            @drawPath()
+            # Drawpath works on all curves in one shot
+            @drawPath(@data)
 
-    drawBars: () ->
-        @curve.selectAll('rect.bars').remove()
+    drawBars: (data, i) ->
+        uuid = @uuid[i]
 
-        rects = @curve.selectAll('rect')
-            .data(@data, (d, i) -> d)
+        @curve.selectAll(".bars-wrapper.#{uuid}").remove()
+        barWrapper = @curve.append("g")
+            .attr('class', "bars-wrapper #{uuid}")
+
+        rects = barWrapper.selectAll('rect')
+            .data(data, (d, i) -> d)
             .enter().append('rect')
-                .attr('class', 'bars')
-                .attr('fill', '#FF7043')
+                .attr('class', "bars #{uuid}")
+                .style('fill', @colors(i))
                 #.attr('width', @scale.x.bandwidth())
                 .attr('width', '2')
                 .attr('x', (d, i) => @scale.x(i))
                 .attr('y', (d, i) => @scale.y(d))
                 .attr('height', (d, i) => @dims.height - @scale.y(d))
 
-    drawPoints: () ->
+    drawPoints: (data) ->
         @curve.selectAll('circle.points').remove()
 
         circles = @curve.selectAll('circle')
-            .data(@data, (d, i) -> d)
+            .data(data, (d, i) -> d)
             .enter().append('circle')
                 .attr('class', 'points')
                 .attr('r', 5)
-                .attr('cx', (d, i) => @scale.x(i/@data.length))
+                .attr('cx', (d, i) => @scale.x(i/data.length))
                 .attr('cy', (d, i) => @scale.y(d))
 
-    drawPath: () ->
+    drawPath: (datas) ->
         path = d3.line()
-            .x((d, i) => @scale.x(i/@data.length))
+            .x((d, i) => @scale.x(i/data.length))
             .y((d) => @scale.y(d))
 
-        @line = path(@data)
-
-        # If points are being displayed, path needs to be transparent
-        @curve.selectAll('path.line')
-            .classed('transparent', @points)
+        @lines = (path(data) for data in datas)
 
 </script>
 
@@ -162,8 +172,12 @@ module.exports =
 
 path.line {
     stroke-width: 2;
-    stroke: @lineColor;
+    //stroke: @lineColor;
     fill: none;
+}
+
+rect.bars {
+    opacity: 1;
 }
 
 g.axis {
