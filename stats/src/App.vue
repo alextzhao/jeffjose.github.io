@@ -1,38 +1,38 @@
 <template>
   <div id="app">
       <div class="panel">
-          <dual-slider v-for="param, i in beta" :color="colors(i)" :props="param"></dual-slider>
+
+          <slider v-for="param, i in beta" :color="colors(i)" :props="param"></slider>
           <button @click="addAnotherSlider(beta)">Add Another</button>
           <curve :values="betavalues" width="800" height="400" title="Beta Distribution"></curve>
       </div>
 
-      <!--
       <div class="panel">
-          <slider v-model="gamma.shape" label="shape" min=0 max=1 step=0.01></slider>
-          <slider v-model="gamma.scale" label="scale" min=0 max=20 step=0.01></slider>
+          <slider v-for="param, i in gamma" :color="colors(i)" :props="param"></slider>
+          <button @click="addAnotherSlider(gamma)">Add Another</button>
           <curve :values="gammavalues" width="800" height="400" title="Gamma Distribution"></curve>
       </div>
 
       <div class="panel">
-          <slider v-model="normal.mean" label="mean" min=0 max=1 step=0.01></slider>
-          <slider v-model="normal.std"  label="std" min=0 max=1 step=0.01></slider>
+          <slider v-for="param, i in normal" :color="colors(i)" :props="param"></slider>
+          <button @click="addAnotherSlider(normal)">Add Another</button>
           <curve :values="normalvalues" width="800" height="400" title="Normal Distribution"></curve>
       </div>
 
       <div class="panel">
-          <slider v-model="poisson.lambda" label="lambda" min=0 max=10 step=0.01></slider>
+          <slider v-for="param, i in poisson" :color="colors(i)" :props="param"></slider>
+          <button @click="addAnotherSlider(poisson)">Add Another</button>
           <curve :values="poissonvalues" width="800" height="400" title="Poisson Distribution" :points="true"></curve>
       </div>
 
-      -->
       <div class="panel">
-          <dual-slider v-for="param, i in negbin" :color="colors(i)" :props="param"></dual-slider>
+          <slider v-for="param, i in negbin" :color="colors(i)" :props="param"></slider>
           <button @click="addAnotherSlider(negbin)">Add Another</button>
           <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution" :points="true"></curve>
       </div>
 
       <div class="panel">
-          <dual-slider v-for="param, i in bin" :color="colors(i)" :props="param"></dual-slider>
+          <slider v-for="param, i in bin" :color="colors(i)" :props="param"></slider>
           <button @click="addAnotherSlider(bin)">Add Another</button>
           <curve :values="binvalues" width="800" height="400" title="Binomial Distribution" :points="true"></curve>
       </div>
@@ -44,7 +44,6 @@
 
 Curve = require './components/Curve'
 Slider = require './components/Slider'
-DualSlider = require './components/DualSlider'
 
 Utils = require './utils/Utils'
 
@@ -57,17 +56,48 @@ _ = require 'lodash'
 
 module.exports =
   name: 'app',
-  components: {Curve, Slider, DualSlider}
+  components: {Curve, Slider}
   mixins: [Utils]
   data: () ->
-    gamma:
-        shape:.5
-        scale: 1
-    normal:
-        mean: .5
-        std: .10
-    poisson:
-        lambda: 5.5
+    gamma: [
+        [
+                name: 'shape'
+                data: .5
+                min: 0
+                max: 1
+                step: 0.01
+        ,
+                name: 'scale'
+                data: 1
+                min: 0
+                max: 20
+                step: 0.01
+        ]
+    ]
+    normal: [
+        [
+                name: 'mean'
+                data: .5
+                min: 0
+                max: 1
+                step: 0.01
+        ,
+                name: 'std'
+                data: .1
+                min: 0
+                max: 1
+                step: 0.01
+        ]
+    ]
+    poisson: [
+        [
+                name: 'lambda'
+                data: 5.5
+                min: 0
+                max: 20
+                step: 1
+        ]
+    ]
     negbin: [
         [
                 name: 'n'
@@ -134,11 +164,13 @@ module.exports =
       betavalues: () ->
           (jstat.jStat.beta.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @beta)
       gammavalues: () ->
-          (jstat.jStat.gamma.pdf(x/100, @gamma.shape, @gamma.scale) for x in [0...100])
+          x = (jstat.jStat.gamma.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @gamma)
+          console.log(x)
+          return x
       normalvalues: () ->
-          (jstat.jStat.normal.pdf(x/100, @normal.mean, @normal.std) for x in [0...100])
+          (jstat.jStat.normal.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @normal)
       poissonvalues: () ->
-          (jstat.jStat.poisson.pdf(x, @poisson.lambda) for x in [0...20])
+          (jstat.jStat.poisson.pdf(x, params[0].data) for x in [0...20] for params in @poisson)
       negbinvalues: () ->
           (jstat.jStat.negbin.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @negbin)
       binvalues: () ->

@@ -16,6 +16,7 @@ _        = require 'lodash'
 
 Utils   = require '../utils/Utils'
 
+INFINITY = 100
 YMAX = 4
 
 module.exports =
@@ -60,11 +61,12 @@ module.exports =
             value.map (x) ->
 
                if (x is Infinity) or (x is -Infinity)
-                   return @infinity
+                   return INFINITY
                else if _.isNaN(x)
                    return 0
                else
                    return _.max([x, 0])
+
 
     draw: () ->
       @setupSVG()
