@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>{{ title }}</h1>
         <svg :height="height" :width="width">
             <g class="wrapper">
                 <path v-for="line, i in lines" :stroke="colors(i)" class="line" :d="line"/>

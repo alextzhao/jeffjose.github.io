@@ -1,49 +1,23 @@
 <template>
   <div id="app">
-      <div class="panel">
+      <graph title="Beta Distribution" :props="beta" :values="betavalues" width="800" height="400"></graph>
 
-          <slider v-for="param, i in beta" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(beta)">Add Another</button>
-          <curve :values="betavalues" width="800" height="400" title="Beta Distribution"></curve>
-      </div>
+      <graph title="Gamma Distribution" :props="gamma" :values="gammavalues" width="800" height="400"></graph>
 
-      <div class="panel">
-          <slider v-for="param, i in gamma" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(gamma)">Add Another</button>
-          <curve :values="gammavalues" width="800" height="400" title="Gamma Distribution"></curve>
-      </div>
+      <graph title="Normal Distribution" :props="normal" :values="normalvalues" width="800" height="400"></graph>
 
-      <div class="panel">
-          <slider v-for="param, i in normal" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(normal)">Add Another</button>
-          <curve :values="normalvalues" width="800" height="400" title="Normal Distribution"></curve>
-      </div>
+      <graph title="Poisson Distribution" :props="poisson" :values="poissonvalues" width="800" height="400"></graph>
 
-      <div class="panel">
-          <slider v-for="param, i in poisson" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(poisson)">Add Another</button>
-          <curve :values="poissonvalues" width="800" height="400" title="Poisson Distribution" :points="true"></curve>
-      </div>
+      <graph title="Negative Binomial Distribution" :props="negbin" :values="negbinvalues" width="800" height="400"></graph>
 
-      <div class="panel">
-          <slider v-for="param, i in negbin" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(negbin)">Add Another</button>
-          <curve :values="negbinvalues" width="800" height="400" title="Negative Binomial Distribution" :points="true"></curve>
-      </div>
-
-      <div class="panel">
-          <slider v-for="param, i in bin" :color="colors(i)" :props="param"></slider>
-          <button @click="addAnotherSlider(bin)">Add Another</button>
-          <curve :values="binvalues" width="800" height="400" title="Binomial Distribution" :points="true"></curve>
-      </div>
+      <graph title="Binomial Distribution" :props="bin" :values="binvalues" width="800" height="400"></graph>
 
   </div>
 </template>
 
 <script lang="coffee">
 
-Curve = require './components/Curve'
-Slider = require './components/Slider'
+Graph = require './components/Graph'
 
 Utils = require './utils/Utils'
 
@@ -56,7 +30,7 @@ _ = require 'lodash'
 
 module.exports =
   name: 'app',
-  components: {Curve, Slider}
+  components: {Graph}
   mixins: [Utils]
   data: () ->
     gamma: [
