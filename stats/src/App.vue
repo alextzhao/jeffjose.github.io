@@ -6,11 +6,15 @@
 
       <graph title="Normal Distribution" :props="normal" :values="normalvalues" width="800" height="400"></graph>
 
-      <graph title="Poisson Distribution" :props="poisson" :values="poissonvalues" width="800" height="400"></graph>
+      <graph title="Poisson Distribution" :props="poisson" :values="poissonvalues" width="800" height="400" discrete="true"></graph>
 
-      <graph title="Negative Binomial Distribution" :props="negbin" :values="negbinvalues" width="800" height="400"></graph>
+      <graph title="Negative Binomial Distribution" :props="negbin" :values="negbinvalues" width="800" height="400" discrete="true"></graph>
 
-      <graph title="Binomial Distribution" :props="bin" :values="binvalues" width="800" height="400"></graph>
+      <graph title="Binomial Distribution" :props="bin" :values="binvalues" width="800" height="400" discrete="true"></graph>
+
+      <graph title="Chi-squared Distribution" :props="chisq" :values="chisqvalues" width="800" height="400"></graph>
+
+      <graph title="Exponential Distribution" :props="exp" :values="expvalues" width="800" height="400"></graph>
 
   </div>
 </template>
@@ -19,19 +23,12 @@
 
 Graph = require './components/Graph'
 
-Utils = require './utils/Utils'
-
 jstat = require 'jstat'
 _ = require 'lodash'
-
-#[alpha, beta] = [1, 1]
-#[alpha, beta] = [.7, 5]
-#[alpha, beta] = [5, 73]
 
 module.exports =
   name: 'app',
   components: {Graph}
-  mixins: [Utils]
   data: () ->
     gamma: [
         [
@@ -107,7 +104,7 @@ module.exports =
     beta: [
         [
                 name: 'alpha'
-                data: 1.53
+                data: 1.5
                 min: 0
                 max: 20
                 step: 0.01
@@ -119,28 +116,30 @@ module.exports =
                 step: 0.01
         ]
     ]
-
-  methods:
-        addAnotherSlider: (props) ->
-            prop = _.cloneDeep(props[0])
-
-            # Create a random "data" attribute
-            #  if the prop.step == 1, then its an integer
-            #  else if prop.step != 1, then its a float
-            for p in prop
-                _data = _.random(p.min, p.max, p.step isnt 1)
-                data = Math.round(100*_data) / 100
-                p.data = data
-
-            props.push(prop)
+    chisq: [
+        [
+                name: 'dof'
+                data: 3
+                min: 0
+                max: 40
+                step: 1
+        ]
+    ]
+    exp: [
+        [
+                name: 'rate'
+                data: .4
+                min: 0
+                max: 1
+                step: .01
+        ]
+    ]
 
   computed:
       betavalues: () ->
           (jstat.jStat.beta.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @beta)
       gammavalues: () ->
-          x = (jstat.jStat.gamma.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @gamma)
-          console.log(x)
-          return x
+          (jstat.jStat.gamma.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @gamma)
       normalvalues: () ->
           (jstat.jStat.normal.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @normal)
       poissonvalues: () ->
@@ -149,6 +148,10 @@ module.exports =
           (jstat.jStat.negbin.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @negbin)
       binvalues: () ->
           (jstat.jStat.binomial.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @bin)
+      chisqvalues: () ->
+          (jstat.jStat.chisquare.pdf(x, params[0].data) for x in [0...50] for params in @chisq)
+      expvalues: () ->
+          (jstat.jStat.exponential.pdf(x, params[0].data) for x in [0...100] for params in @exp)
 
 </script>
 

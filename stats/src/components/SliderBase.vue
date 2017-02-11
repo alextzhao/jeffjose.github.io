@@ -6,13 +6,15 @@
       </div>
 
       <div class="right">
-          <span class="text">
-              <input class="value" v-bind:value.number="value" @wheel="wheel($event.wheelDelta)" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
-          </span>
           <span class="buttons">
               <input class="plus" type="button" value="+" @click.prevent="increment"></input>
               <input class="minus" type="button" value="-" @click.prevent="decrement"></input>
           </span>
+
+          <span class="text">
+              <input class="value" v-bind:value.number="value" @wheel="wheel($event.wheelDelta)" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
+          </span>
+
      </div>
     </div>
 </template>
@@ -70,6 +72,7 @@ module.exports =
 @textColorLight: #FFFFFF;
 
 .wrapper {
+    height: 20px;
     width: 200px;
     margin: 10px;
     padding: 10px 0px;
@@ -84,6 +87,8 @@ module.exports =
 .left {
     float: left;
     height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
 
     .label {
         font-size: 10px;
@@ -93,15 +98,15 @@ module.exports =
         text-align: center;
         color: @textColorLight;
         float: left;
-        font-size: 10px;
-        padding: 0px 3px;
+        font-size: 14px;
+        padding: 0px 5px;
         width: 40px;
 
         p {
             float: right;
             margin: 0px;
 
-            margin-top: 3px;
+            margin-top: 1px;
         }
 
     }
@@ -117,27 +122,42 @@ module.exports =
 .right {
 
     .text {
-        float: left;
 
         input {
             float: left;
             border: none;
             padding: 0px;
-            color: @textColorDark;
-            width: 26px;
+            color: @textColorLight;
+            background-color: rgba(0, 0, 0, 0);
+            width: 50px;
             height: 20px;
 
-            font-size: 10px;
+            font-size: 14px;
             line-height: 0px;
             vertical-align: middle;
             text-align: center;
 
             margin: 0px 2px;
 
+            &:hover {
+                color: @textColorLight;
+                border-bottom: 1px solid @textColorLight;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &::selection {
+                background-color: rgba(0, 0, 0, 0.3);
+                padding: 10px;
+            }
+
         }
     }
 
     .buttons {
+        float: left;
         input {
             width: 10px;
             height: 10px;
@@ -150,8 +170,13 @@ module.exports =
             color: @textColorDark;
 
             &:hover {
-                background-color: darken(white, 40%);
+                background-color: darken(white, 20%);
             }
+
+            &:focus {
+                outline: none;
+            }
+
         }
 
         .minus {

@@ -4,8 +4,8 @@
             <slider-base v-for="p in prop" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
         </div>
         <div @click="addAnother" class="add-another">
-            <div class="plus">+</div>
-            <div class="distribution">Distribution</div>
+            <span class="plus">+</span>
+            <span class="distribution">Distribution</span>
         </div>
     </div>
 </template>
@@ -40,23 +40,31 @@ module.exports =
 @addAnotherBGColor: #E0E0E0;
 
 .slider-wrapper {
-    display: table;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-bottom: 20px;
 
     .slider {
-        display: inline-block;
+        display: row;
     }
 
     .add-another {
-        display: table-cell;
+        min-height: 62px;
+        display: flex;
+
         width: 200px;
         background-color: @addAnotherBGColor;
-        height: 100%;
         vertical-align: middle;
         cursor: pointer;
 
         color: darken(@addAnotherBGColor, 50%);
         line-height: 24px;
 
+        flex-direction:  column;
+
+        align-items: center;
         .plus {
             font-size: 32px;
         }

@@ -139,7 +139,7 @@ module.exports =
                 .attr('class', "bars #{uuid}")
                 .style('fill', @colors(i))
                 #.attr('width', @scale.x.bandwidth())
-                .attr('width', '2')
+                .attr('width', 2)
                 .attr('x', (d, i) => @scale.x(i))
                 .attr('y', (d, i) => @scale.y(d))
                 .attr('height', (d, i) => @dims.height - @scale.y(d))

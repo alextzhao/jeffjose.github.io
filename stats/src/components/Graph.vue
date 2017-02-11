@@ -2,7 +2,7 @@
     <div class="graph panel">
       <h1>{{ title }}</h1>
       <slider :props="props"></slider>
-      <curve :values="values" :width="width" :height="height" :title="title"></curve>
+      <curve :values="values" :width="width" :height="height" :title="title" :points="discrete"></curve>
     </div>
 </template>
 
@@ -13,7 +13,7 @@ Curve = require './Curve'
 
 module.exports =
     name: 'graph'
-    props: ['title', 'props', 'values', 'width', 'height']
+    props: ['title', 'props', 'values', 'width', 'height', 'discrete']
     components: {Slider, Curve}
 </script>
 
