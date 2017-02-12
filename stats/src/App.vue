@@ -7,21 +7,21 @@
           </div>
       </div>
 
-      <graph title="Beta Distribution" :props="beta" :dist="jstat.jStat.beta" width=1000 height=600 :samples="[0, 1, 0.01]"></graph>
+      <graph title="Beta Distribution" :props="beta" :dist="jstat.jStat.beta" width=900 height=400 :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Gamma Distribution" :props="gamma" :dist="jstat.jStat.gamma" width="1000" height="600" :samples="[0, 1, 0.01]"></graph>
+      <graph title="Gamma Distribution" :props="gamma" :dist="jstat.jStat.gamma" width="900" height="400" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="1000" height="600" :samples="[0, 1, 0.01]"></graph>
+      <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="900" height="400" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="1000" height="600" :samples="[0, 20, 1]"></graph>
+      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="900" height="400" :samples="[0, 20, 1]"></graph>
 
-      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="1000" height="600":samples="[0, 100, 1]"></graph>
+      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="900" height="400":samples="[0, 100, 1]"></graph>
 
-      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="1000" height="600":samples="[0, 100, 1]"></graph>
+      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="900" height="400":samples="[0, 100, 1]"></graph>
 
-      <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="1000" height="600" :samples="[0, 100, 1]"></graph>
+      <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="900" height="400" :samples="[0, 100, 1]"></graph>
 
-      <graph title="Exponential Distribution" :props="exp" :dist="jstat.jStat.exponential" width="1000" height="600" :samples="[0, 100, 1]"></graph>
+      <graph title="Exponential Distribution" :props="exp" :dist="jstat.jStat.exponential" width="900" height="400" :samples="[0, 100, 1]"></graph>
 
       <div :style="themeColor" class="footer">
           <div class="content">
