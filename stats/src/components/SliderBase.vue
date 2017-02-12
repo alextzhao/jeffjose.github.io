@@ -24,10 +24,14 @@
 d3 = require 'd3'
 _  = require 'lodash'
 
+Utils = require '../utils/Utils'
+
 module.exports =
     name: 'slider-base'
     props: ['label', 'value', 'max', 'min', 'step', 'bounded']
+    mixins: ['Utils']
     methods:
+        round: (val) -> Math.round(100 * val) / 100
         update: (value) ->
 
             _number = Number(value)
@@ -46,14 +50,12 @@ module.exports =
             @$emit('input', number)
 
         increment: () ->
-            _newValue = Number(@value) + Number(@step)
-            newValue = Math.round(100*_newValue) / 100
+            newValue = @round(Number(@value) + Number(@step))
 
             @update(newValue)
 
         decrement: () ->
-            _newValue = Number(@value) - Number(@step)
-            newValue = Math.round(100*_newValue) / 100
+            newValue = @round(Number(@value) - Number(@step))
 
             @update(newValue)
 
@@ -66,7 +68,7 @@ module.exports =
 
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 
 @textColorDark: #333333;
 @textColorLight: #FFFFFF;
@@ -74,12 +76,15 @@ module.exports =
 .wrapper {
     height: 20px;
     width: 200px;
-    margin: 10px;
-    padding: 10px 0px;
+    margin: 3px;
+    padding: 5px 0px;
     border: 1px solid rgba(0, 0, 0, 0);
+    transition: all ease-in-out 100ms;
+
+    align-self: center;
 
     &:hover {
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -91,14 +96,13 @@ module.exports =
     margin-left: 5px;
 
     .label {
-        font-size: 10px;
         display: inline-block;
         height: 100%;
         vertical-align: middle;
         text-align: center;
-        color: @textColorLight;
+        color: fade(@textColorLight, 80%);
         float: left;
-        font-size: 14px;
+        font-size: 12px;
         padding: 0px 5px;
         width: 40px;
 

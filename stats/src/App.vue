@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-      <graph title="Beta Distribution" :props="beta" :values="betavalues" width="800" height="400"></graph>
+      <graph title="Beta Distribution" :props="beta" :dist="jstat.jStat.beta" width=800 height=400 :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Gamma Distribution" :props="gamma" :values="gammavalues" width="800" height="400"></graph>
+      <graph title="Gamma Distribution" :props="gamma" :dist="jstat.jStat.gamma" width="800" height="400" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Normal Distribution" :props="normal" :values="normalvalues" width="800" height="400"></graph>
+      <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="800" height="400" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Poisson Distribution" :props="poisson" :values="poissonvalues" width="800" height="400" discrete="true"></graph>
+      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="800" height="400" discrete="true" :samples="[0, 20, 1]"></graph>
 
-      <graph title="Negative Binomial Distribution" :props="negbin" :values="negbinvalues" width="800" height="400" discrete="true"></graph>
+      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="800" height="400" discrete="true" :samples="[0, 100, 1]"></graph>
 
-      <graph title="Binomial Distribution" :props="bin" :values="binvalues" width="800" height="400" discrete="true"></graph>
+      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="800" height="400" discrete="true" :samples="[0, 100, 1]"></graph>
 
-      <graph title="Chi-squared Distribution" :props="chisq" :values="chisqvalues" width="800" height="400"></graph>
+      <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="800" height="400" :samples="[0, 100, 1]"></graph>
 
-      <graph title="Exponential Distribution" :props="exp" :values="expvalues" width="800" height="400"></graph>
+      <graph title="Exponential Distribution" :props="exp" :dist="jstat.jStat.exponential" width="800" height="400" :samples="[0, 100, 1]"></graph>
 
   </div>
 </template>
@@ -24,12 +24,12 @@
 Graph = require './components/Graph'
 
 jstat = require 'jstat'
-_ = require 'lodash'
 
 module.exports =
   name: 'app',
   components: {Graph}
   data: () ->
+    jstat: jstat
     gamma: [
         [
                 name: 'shape'
@@ -118,7 +118,7 @@ module.exports =
     ]
     chisq: [
         [
-                name: 'dof'
+                name: 'df'
                 data: 3
                 min: 0
                 max: 40
@@ -134,35 +134,48 @@ module.exports =
                 step: .01
         ]
     ]
-
-  computed:
-      betavalues: () ->
-          (jstat.jStat.beta.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @beta)
-      gammavalues: () ->
-          (jstat.jStat.gamma.pdf(x/500, params[0].data, params[1].data) for x in [0...500] for params in @gamma)
-      normalvalues: () ->
-          (jstat.jStat.normal.pdf(x/100, params[0].data, params[1].data) for x in [0...100] for params in @normal)
-      poissonvalues: () ->
-          (jstat.jStat.poisson.pdf(x, params[0].data) for x in [0...20] for params in @poisson)
-      negbinvalues: () ->
-          (jstat.jStat.negbin.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @negbin)
-      binvalues: () ->
-          (jstat.jStat.binomial.pdf(x, params[0].data, params[1].data) for x in [0...100] for params in @bin)
-      chisqvalues: () ->
-          (jstat.jStat.chisquare.pdf(x, params[0].data) for x in [0...100] for params in @chisq)
-      expvalues: () ->
-          (jstat.jStat.exponential.pdf(x, params[0].data) for x in [0...100] for params in @exp)
-
 </script>
 
 <style lang="less">
 
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
     #app {
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-family: 'Open Sans', 'Avenir', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
       color: #2c3e50;
       margin-top: 60px;
+    }
+
+    // For material icons
+    // .. from http://google.github.io/material-design-icons/
+
+    @import url('https://fonts.googleapis.com/css?family=Material+Icons');
+
+    .material-icons {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;  /* Preferred icon size */
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+
+      /* Support for all WebKit browsers. */
+      -webkit-font-smoothing: antialiased;
+      /* Support for Safari and Chrome. */
+      text-rendering: optimizeLegibility;
+
+      /* Support for Firefox. */
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Support for IE. */
+      font-feature-settings: 'liga';
     }
 </style>

@@ -1,11 +1,21 @@
 <template>
     <div class="slider-wrapper">
         <div v-for="prop, i in props" class="slider" :style="{'background-color': colors(i)}">
-            <slider-base v-for="p in prop" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
+            <div class="top">
+                <i v-show='props.length > 1' @click="remove(i)" class="material-icons close">close</i>
+            </div>
+            <div class="all-sliders">
+                <slider-base v-for="p in prop" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
+            </div>
+            <div class="bottom">
+                <div class="stat">mean:   <div class="val">{{stats[i].mean | clean}}    </div></div>
+                <div class="stat">median: <div class="val">{{stats[i].median | clean}}  </div></div>
+                <div class="stat">mode:   <div class="val">{{stats[i].mode | clean}}    </div></div>
+                <div class="stat">var:    <div class="val">{{stats[i].variance | clean}}</div></div>
+            </div>
         </div>
-        <div @click="addAnother" class="add-another">
-            <span class="plus">+</span>
-            <span class="distribution">Distribution</span>
+        <div @click="add" class="add-another">
+            <i class="material-icons add">add</i>
         </div>
     </div>
 </template>
@@ -19,25 +29,45 @@ module.exports =
   name: 'slider'
   mixins: [Utils]
   components: {SliderBase}
-  props: ['props']
+  props: ['props', 'stats']
+  filters:
+      clean: (val) ->
+            if _.isNaN(val)
+                val = ''
+            else if val is Infinity
+                val = '∞'
+            else if val is -Infinity
+                val = '-∞'
+            return val
   methods:
-    addAnother: () ->
+    round: (val) -> Math.round(100 * val) / 100
+    add: () ->
         prop = _.cloneDeep(@props[0])
 
         # Create a random "data" attribute
         #  if the prop.step == 1, then its an integer
         #  else if prop.step != 1, then its a float
         for p in prop
-            _data = _.random(p.min, p.max, p.step isnt 1)
-            data = Math.round(100*_data) / 100
-            p.data = data
+            p.data = @round(_.random(p.min, p.max, p.step isnt 1))
 
         @props.push(prop)
+
+    remove: (i) ->
+
+        if @props.length is 1
+            return
+        else
+            @props.splice(i, 1)
+
+
 </script>
 
 <style scoped lang="less">
 
 @addAnotherBGColor: #E0E0E0;
+
+@textColorDark: #333333;
+@textColorLight: #FFFFFF;
 
 .slider-wrapper {
 
@@ -45,13 +75,72 @@ module.exports =
     flex-wrap: wrap;
     align-items: stretch;
     margin-bottom: 20px;
+    transition: all ease-in-out 500ms;
 
     .slider {
-        display: row;
+        transition: all ease-in-out 500ms;
+        margin: 0px 1px;
+        cursor: default;
+
+        .top {
+            height: 19px;
+            display: flex;
+            padding-bottom: 5px;
+            border-bottom: 1px solid fade(@textColorLight, 30%);
+            .close {
+                margin-left: auto;
+                margin: 5px 5px 0px auto;
+                font-size: 14px;
+                color: fade(@textColorLight, 80%);
+                cursor: pointer;
+
+                &:hover {
+                    color: @textColorLight;
+                }
+            }
+        }
+
+
+        .bottom {
+            font-size: 10px;
+            transition: all ease-in-out 100ms;
+            margin: 0px;
+            padding: 5px;
+            border-top: 1px solid fade(@textColorLight, 30%);
+
+            color: fade(@textColorLight, 80%);
+            display: flex;
+            flex-flow: row;
+
+            .stat {
+                display: inline-block;
+                padding: 3px;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    color: white;
+                }
+
+                .val {
+                    width: 24px;
+                    color: white;
+                    display: inline-block;
+                }
+            }
+        }
+
+
     }
 
+    .all-sliders {
+
+        display: flex;
+        flex-flow: column;
+    }
+
+
+
     .add-another {
-        min-height: 62px;
+        transition: all ease-in-out 100ms;
         display: flex;
 
         width: 200px;
@@ -59,22 +148,24 @@ module.exports =
         vertical-align: middle;
         cursor: pointer;
 
-        color: darken(@addAnotherBGColor, 50%);
+        color: darken(@addAnotherBGColor, 30%);
         line-height: 24px;
 
         flex-direction:  column;
 
         align-items: center;
-        .plus {
+        .add {
             font-size: 32px;
-        }
-
-        .distribution {
-            font-size: 16px;
+            margin: auto 0px;
         }
 
         &:hover {
             background-color: darken(@addAnotherBGColor, 5%);
+
+            .add {
+                color: darken(@addAnotherBGColor, 50%);
+
+            }
         }
     }
 

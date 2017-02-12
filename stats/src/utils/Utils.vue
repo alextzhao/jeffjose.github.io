@@ -10,9 +10,6 @@ module.exports =
     data: () ->
         colors: d3.scaleOrdinal(SCHEME)
         uuid: @getUuid() for i in [0...10]
-    computed:
-        #colors: () -> d3.scaleOrdinal(d3Colors.schemeDark2)
-        a: () -> 'foo'
     methods:
         getUuid: () ->
 
