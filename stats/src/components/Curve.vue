@@ -101,7 +101,7 @@ module.exports =
           .on 'wheel', (e) =>
               d3.event.stopPropagation()
               d3.event.preventDefault()
-              @zoomScales(x=d3.event.wheelDeltaY, y=d3.event.wheelDeltaY)
+              @zoomScales(x=d3.event.wheelDeltaY * -1, y=d3.event.wheelDeltaY * -1)
               @redraw(true)
         @curve
           .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
@@ -155,7 +155,7 @@ module.exports =
             .on 'wheel', (e) =>
                 d3.event.stopPropagation()
                 d3.event.preventDefault()
-                @zoomScales(x=d3.event.wheelDeltaY, y=0)
+                @zoomScales(x=d3.event.wheelDeltaY * -1, y=0)
                 @redraw(true)
 
         @curve.append('g')
@@ -164,7 +164,7 @@ module.exports =
             .on 'wheel', (e) =>
                 d3.event.stopPropagation()
                 d3.event.preventDefault()
-                @zoomScales(x=0, y=d3.event.wheelDeltaY)
+                @zoomScales(x=0, y=d3.event.wheelDeltaY * -1)
                 @redraw(true)
 
 
