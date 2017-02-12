@@ -172,6 +172,9 @@ body .code h3 span {
 body .code .item {
   margin-bottom: 30px;
 }
+body .code .item img {
+  width: 100%;
+}
 body .talks {
   color: #333;
   margin-top: 20px;

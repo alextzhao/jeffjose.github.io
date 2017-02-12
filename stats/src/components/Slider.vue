@@ -88,7 +88,7 @@ module.exports =
 
     .slider {
         transition: all ease-in-out 500ms;
-        margin: 0px 1px;
+        margin: 1px;
         cursor: default;
 
         .top {
@@ -171,7 +171,7 @@ module.exports =
     .add-another {
         transition: all ease-in-out 100ms;
         display: flex;
-        margin: 0px 1px;
+        margin: 1px;
 
         width: 254.67px; // from eye-balling in chrome
         background-color: @addAnotherBGColor;
