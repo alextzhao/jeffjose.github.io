@@ -2,7 +2,7 @@
     <div class="graph panel">
       <h1>{{ title }}</h1>
       <slider :stats="stats" :props="props"></slider>
-      <curve :values="values" :width="width" :height="height" :title="title" :points="discrete" :shaded="shaded"></curve>
+      <curve :values="values" :width="width" :height="height" :title="title" :discrete="discrete" :points="points" :shaded="shaded"></curve>
     </div>
 </template>
 
@@ -18,13 +18,15 @@ Curve = require './Curve'
 module.exports =
     name: 'graph'
     mixins: ['Utils']
-    props: ['title', 'props', 'dist', 'samples', 'width', 'height', 'discrete', 'area']
+    props: ['title', 'props', 'dist', 'samples', 'width', 'height']
     components: {Slider, Curve}
     methods:
         getSamples: () -> _.range(@samples[0], @samples[1], @samples[2])
         round: (val) -> Math.round(100 * val) / 100
     computed:
         shaded: () -> (p.area for p in @props)
+        points: () -> (p.dots for p in @props)
+        discrete: () -> @props[0].discrete # technically this is an attribute of the distribution, but implemented as part of the prop
         values: () ->
 
             samples = @getSamples()

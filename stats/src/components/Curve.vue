@@ -28,8 +28,9 @@ module.exports =
     height: String
     width: String,
     values: Array,
+    discrete: Boolean,
     points:
-        default: false
+        default: [false]
     shaded:
         default: [false]
     }
@@ -50,6 +51,9 @@ module.exports =
           @redraw()
 
       shaded: (x) ->
+          @redraw()
+
+      points: (x) ->
           @redraw()
 
   mounted: () ->
@@ -106,7 +110,7 @@ module.exports =
 
         # Use the first item to setup x axis
         sampleData = @data[0]
-        if @points
+        if @discrete
             x = d3.scaleLinear().range([0, @dims.width])
             x.domain(d3.extent(sampleData, (d, i) => i))
         else
@@ -166,19 +170,27 @@ module.exports =
 
     drawGraph: () ->
 
-        if @points
+
+        if @discrete
+            @curve.selectAll(".bars-wrapper").remove()
             for data, i in @data
                 @drawBars(data, i)
         else
-            # Drawpath works on all curves in one shot
             @drawPath(@data)
 
         for shaded, i in @shaded
 
-            if @shaded
-                @drawArea(@data)
-            else
-                @areas[i] = ''
+            @drawArea(@data)
+
+        if @discrete
+            # There might or might not be points/dots, but remove them
+            # anyway
+            @curve.selectAll(".points-wrapper").remove()
+
+        for data, i in @data
+
+            if @points[i]
+                @drawPoints(data, i)
 
     drawBars: (data, i) ->
         uuid = @uuid[i]
@@ -198,15 +210,22 @@ module.exports =
                 .attr('y', (d, i) => @scale.y(d))
                 .attr('height', (d, i) => @dims.height - @scale.y(d))
 
-    drawPoints: (data) ->
-        @curve.selectAll('circle.points').remove()
+    drawPoints: (data, i) ->
 
-        circles = @curve.selectAll('circle')
+        uuid = @uuid[i]
+
+        @curve.selectAll(".points-wrapper.#{uuid}").remove()
+
+        pointsWrapper = @curve.append("g")
+            .attr('class', "points-wrapper #{uuid}")
+
+        circles = pointsWrapper.selectAll('circle')
             .data(data, (d, i) -> d)
             .enter().append('circle')
                 .attr('class', 'points')
+                .style('fill', @colors(i))
                 .attr('r', 5)
-                .attr('cx', (d, i) => @scale.x(i/data.length))
+                .attr('cx', (d, i) => @scale.x(i))
                 .attr('cy', (d, i) => @scale.y(d))
 
     drawPath: (datas) ->

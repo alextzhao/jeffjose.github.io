@@ -6,11 +6,11 @@
 
       <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="800" height="400" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="800" height="400" discrete="true" :samples="[0, 20, 1]"></graph>
+      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="800" height="400" :samples="[0, 20, 1]"></graph>
 
-      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="800" height="400" discrete="true" :samples="[0, 100, 1]"></graph>
+      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="800" height="400":samples="[0, 100, 1]"></graph>
 
-      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="800" height="400" discrete="true" :samples="[0, 100, 1]"></graph>
+      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="800" height="400":samples="[0, 100, 1]"></graph>
 
       <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="800" height="400" :samples="[0, 100, 1]"></graph>
 
@@ -35,6 +35,7 @@ module.exports =
     beta: [
         mode: 'pdf'
         area: false
+        dots: false
         p: [
             @createParam('alpha', 1.9, 0, 20, 0.01)
             @createParam('beta', .73, 0, 10, 0.01)]
@@ -42,6 +43,7 @@ module.exports =
     gamma: [
         mode: 'pdf'
         area: false
+        dots: false
         p: [
             @createParam('shape', .5, 0, 1, 0.01)
             @createParam('scale', 1, 0, 20, 0.01)]
@@ -49,6 +51,7 @@ module.exports =
     normal: [
         mode: 'pdf'
         area: false
+        dots: false
         p: [
             @createParam('mean', .5, 0, 1, 0.01)
             @createParam('std', .1, 0, 1, 0.01)]
@@ -56,12 +59,18 @@ module.exports =
     poisson: [
         mode: 'pdf'
         area: false
+        dots: false
+        discrete: true
+        connect: false
         p: [
             @createParam('lambda', 5.5, 0, 20, 1)]
     ]
     negbin: [
         mode: 'pdf'
         area: false
+        dots: false
+        discrete: true
+        connect: false
         p: [
             @createParam('n', 4, 0, 10, 1)
             @createParam('p', .3, 0, 1, 0.01, true)]
@@ -69,6 +78,9 @@ module.exports =
     bin: [
         mode: 'pdf'
         area: false
+        dots: false
+        discrete: true
+        connect: false
         p: [
             @createParam('n', 10, 0, 100, 1)
             @createParam('p', .8, 0, 1, 0.01, true)]
@@ -76,12 +88,14 @@ module.exports =
     chisq: [
         mode: 'pdf'
         area: false
+        dots: false
         p: [
             @createParam('df', 3, 0, 40, 1)]
     ]
     exp: [
         mode: 'pdf'
         area: false
+        dots: false
         p: [
             @createParam('rate', .4, 0, 1, .01)]
     ]

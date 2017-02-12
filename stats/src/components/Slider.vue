@@ -5,7 +5,8 @@
                 <div class="mode" :class="{bg: prop.mode != 'cdf'}" @click="prop.mode = 'pdf'">pdf</div>
                 <div class="mode" :class="{bg: prop.mode == 'cdf'}" @click="prop.mode = 'cdf'">cdf</div>
                 <div>|</div>
-                <div class="mode" :class="{bg: prop.area == true}" @click="prop.area = !prop.area">shade</div>
+                <div v-if="prop.discrete == null" class="toggle" :class="{bg: prop.area == true}" @click="prop.area = !prop.area">shade</div>
+                <div v-if="prop.discrete != null" class="toggle" :class="{bg: prop.dots == true}" @click="prop.dots = !prop.dots">points</div>
                 <i v-show='props.length > 1' @click="remove(i)" class="material-icons close">close</i>
             </div>
             <div class="all-sliders">
@@ -96,7 +97,7 @@ module.exports =
             padding-bottom: 5px;
             border-bottom: 1px solid fade(@textColorLight, 30%);
 
-            .mode {
+            .mode, .toggle {
                 font-size: 10px;
                 color: fade(@textColorLight, 80%);
                 margin: 5px 0px 0px 5px;
