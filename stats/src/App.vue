@@ -13,6 +13,8 @@
 
       <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="900" height="400" :samples="[0, 1, 0.01]"></graph>
 
+      <graph title="Weibull Distribution" :props="weibull" :dist="jstat.jStat.weibull" width="900" height="400" :samples="[0, 1, 0.01]"></graph>
+
       <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="900" height="400" :samples="[0, 20, 1]"></graph>
 
       <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="900" height="400":samples="[0, 100, 1]"></graph>
@@ -76,6 +78,14 @@ module.exports =
         p: [
             @createParam('mean', .5, 0, 1, 0.01)
             @createParam('std', .1, 0, 1, 0.01)]
+    ]
+    weibull: [
+        mode: 'pdf'
+        area: false
+        dots: false
+        p: [
+            @createParam('scale', .5, 0, 20, 0.01)
+            @createParam('shape', 1, 0, 20, 0.01)]
     ]
     poisson: [
         mode: 'pdf'
