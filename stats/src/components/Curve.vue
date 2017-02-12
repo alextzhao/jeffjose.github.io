@@ -3,6 +3,7 @@
         <svg :height="height" :width="width">
             <g class="wrapper">
                 <path v-for="line, i in lines" :stroke="colors(i)" class="line" :d="line"/>
+                <path v-for="area, i in areas" :fill="colors(i)" class="area" :class="uuid[i]" :d="area"/>
             </g>
         </svg>
     </div>
@@ -29,9 +30,12 @@ module.exports =
     values: Array,
     points:
         default: false
+    shaded:
+        default: [false]
     }
   data: () ->
     lines: ''
+    areas: ''
     data: @massage(@values)
     margin:
         top: 30
@@ -43,6 +47,9 @@ module.exports =
       values: (values) ->
           @data = @massage(@values)
 
+          @redraw()
+
+      shaded: (x) ->
           @redraw()
 
   mounted: () ->
@@ -78,6 +85,7 @@ module.exports =
     redraw: (axis=false) ->
       if axis
           @drawAxis()
+
       @drawGraph()
 
     setupSVG: () ->
@@ -89,7 +97,6 @@ module.exports =
           .on 'wheel', (e) =>
               d3.event.stopPropagation()
               d3.event.preventDefault()
-              console.log('svg')
               @zoomScales(x=d3.event.wheelDeltaY, y=d3.event.wheelDeltaY)
               @redraw(true)
         @curve
@@ -142,7 +149,6 @@ module.exports =
             .attr('class', 'axis xaxis')
             .call(d3.axisBottom(@scale.x))
             .on 'wheel', (e) =>
-                console.log('xaxis')
                 d3.event.stopPropagation()
                 d3.event.preventDefault()
                 @zoomScales(x=d3.event.wheelDeltaY, y=0)
@@ -152,7 +158,6 @@ module.exports =
             .attr('class', 'axis yaxis')
             .call(d3.axisLeft(@scale.y).ticks(5))
             .on 'wheel', (e) =>
-                console.log('yaxis')
                 d3.event.stopPropagation()
                 d3.event.preventDefault()
                 @zoomScales(x=0, y=d3.event.wheelDeltaY)
@@ -167,6 +172,13 @@ module.exports =
         else
             # Drawpath works on all curves in one shot
             @drawPath(@data)
+
+        for shaded, i in @shaded
+
+            if @shaded
+                @drawArea(@data)
+            else
+                @areas[i] = ''
 
     drawBars: (data, i) ->
         uuid = @uuid[i]
@@ -199,10 +211,27 @@ module.exports =
 
     drawPath: (datas) ->
         path = d3.line()
-            .x((d, i) => @scale.x(i/data.length))
+            .x((d, i) => @scale.x(i/datas[0].length))
             .y((d) => @scale.y(d))
 
         @lines = (path(data) for data in datas)
+
+    drawArea: (datas) ->
+
+        @areas = []
+
+        area = d3.area()
+            .x((d, i) => @scale.x(i/datas[0].length))
+            .y0(@dims.height)
+            .y1((d) => @scale.y(d))
+
+        for data, i in datas
+
+            if @shaded[i]
+                @areas.push(area(data))
+            else
+                @areas[i] = ''
+
 
 </script>
 
@@ -215,8 +244,12 @@ module.exports =
 
 path.line {
     stroke-width: 2;
-    //stroke: @lineColor;
     fill: none;
+}
+
+path.area {
+    stroke: none;
+    opacity: 0.2;
 }
 
 rect.bars {

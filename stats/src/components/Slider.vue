@@ -2,10 +2,14 @@
     <div class="slider-wrapper">
         <div v-for="prop, i in props" class="slider" :style="{'background-color': colors(i)}">
             <div class="top">
+                <div class="mode" :class="{bg: prop.mode != 'cdf'}" @click="prop.mode = 'pdf'">pdf</div>
+                <div class="mode" :class="{bg: prop.mode == 'cdf'}" @click="prop.mode = 'cdf'">cdf</div>
+                <div>|</div>
+                <div class="mode" :class="{bg: prop.area == true}" @click="prop.area = !prop.area">shade</div>
                 <i v-show='props.length > 1' @click="remove(i)" class="material-icons close">close</i>
             </div>
             <div class="all-sliders">
-                <slider-base v-for="p in prop" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
+                <slider-base v-for="p in prop.p" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
             </div>
             <div class="bottom">
                 <div class="stat">mean:   <div class="val">{{stats[i].mean | clean}}    </div></div>
@@ -30,6 +34,9 @@ module.exports =
   mixins: [Utils]
   components: {SliderBase}
   props: ['props', 'stats']
+  data: () ->
+      modes: ['cdf', 'pdf'] # default is PDF
+      mode: true # default is PDF (true), false = CDF
   filters:
       clean: (val) ->
             if _.isNaN(val)
@@ -42,12 +49,13 @@ module.exports =
   methods:
     round: (val) -> Math.round(100 * val) / 100
     add: () ->
+        console.log('add')
         prop = _.cloneDeep(@props[0])
 
         # Create a random "data" attribute
         #  if the prop.step == 1, then its an integer
         #  else if prop.step != 1, then its a float
-        for p in prop
+        for p in prop.p
             p.data = @round(_.random(p.min, p.max, p.step isnt 1))
 
         @props.push(prop)
@@ -87,6 +95,19 @@ module.exports =
             display: flex;
             padding-bottom: 5px;
             border-bottom: 1px solid fade(@textColorLight, 30%);
+
+            .mode {
+                font-size: 10px;
+                color: fade(@textColorLight, 80%);
+                margin: 5px 0px 0px 5px;
+                padding: 0px 3px;
+
+                &.bg {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+
+                cursor: pointer;
+            }
             .close {
                 margin-left: auto;
                 margin: 5px 5px 0px auto;
@@ -142,8 +163,9 @@ module.exports =
     .add-another {
         transition: all ease-in-out 100ms;
         display: flex;
+        margin: 0px 1px;
 
-        width: 200px;
+        width: 254.67px; // from eye-balling in chrome
         background-color: @addAnotherBGColor;
         vertical-align: middle;
         cursor: pointer;

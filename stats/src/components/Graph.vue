@@ -2,7 +2,7 @@
     <div class="graph panel">
       <h1>{{ title }}</h1>
       <slider :stats="stats" :props="props"></slider>
-      <curve :values="values" :width="width" :height="height" :title="title" :points="discrete"></curve>
+      <curve :values="values" :width="width" :height="height" :title="title" :points="discrete" :shaded="shaded"></curve>
     </div>
 </template>
 
@@ -18,52 +18,52 @@ Curve = require './Curve'
 module.exports =
     name: 'graph'
     mixins: ['Utils']
-    props: ['title', 'props', 'dist', 'samples', 'width', 'height', 'discrete']
+    props: ['title', 'props', 'dist', 'samples', 'width', 'height', 'discrete', 'area']
     components: {Slider, Curve}
     methods:
         getSamples: () -> _.range(@samples[0], @samples[1], @samples[2])
         round: (val) -> Math.round(100 * val) / 100
-
     computed:
+        shaded: () -> (p.area for p in @props)
         values: () ->
 
             samples = @getSamples()
 
             # Check the first props to see whether this is a 1 param, 2 param or 3 param distribution
-            if @props[0].length is 1
-                values = (@dist.pdf(x, params[0].data) for x in samples for params in @props)
-            else if @props[0].length is 2
-                values = (@dist.pdf(x, params[0].data, params[1].data) for x in samples for params in @props)
-            else if @props[0].length is 3
-                values = (@dist.pdf(x, params[0].data, params[1].data, params[2].data) for x in samples for params in @props)
+            if @props[0].p.length is 1
+                values = (_.get(@dist, params.mode, _.noop)(x, params.p[0].data) for x in samples for params in @props)
+            else if @props[0].p.length is 2
+                values = (_.get(@dist, params.mode, _.noop)(x, params.p[0].data, params.p[1].data) for x in samples for params in @props)
+            else if @props[0].p.length is 3
+                values = (_.get(@dist, params.mode, _.noop)(x, params.p[0].data, params.p[1].data, params.p[2].data) for x in samples for params in @props)
 
             return values
 
         stats: () ->
 
             # Check the first props to see whether this is a 1 param, 2 param or 3 param distribution
-            if @props[0].length is 1
+            if @props[0].p.length is 1
 
                 stats = ({
-                        mean:     @round(@dist.mean?(params[0].data))
-                        median:   @round(@dist.median?(params[0].data))
-                        mode:     @round(@dist.mode?(params[0].data))
-                        variance: @round(@dist.variance?(params[0].data))
+                        mean:     @round(@dist.mean?(params.p[0].data))
+                        median:   @round(@dist.median?(params.p[0].data))
+                        mode:     @round(@dist.mode?(params.p[0].data))
+                        variance: @round(@dist.variance?(params.p[0].data))
                 } for params in @props)
 
-            else if @props[0].length is 2
+            else if @props[0].p.length is 2
                 stats = ({
-                        mean:     @round(@dist.mean?(params[0].data, params[1].data))
-                        median:   @round(@dist.median?(params[0].data, params[1].data))
-                        mode:     @round(@dist.mode?(params[0].data, params[1].data))
-                        variance: @round(@dist.variance?(params[0].data, params[1].data))
+                        mean:     @round(@dist.mean?(params.p[0].data, params.p[1].data))
+                        median:   @round(@dist.median?(params.p[0].data, params.p[1].data))
+                        mode:     @round(@dist.mode?(params.p[0].data, params.p[1].data))
+                        variance: @round(@dist.variance?(params.p[0].data, params.p[1].data))
                 } for params in @props)
-            else if @props[0].length is 3
+            else if @props[0].p.length is 3
                 stats = ({
-                        mean:     @round(@dist.mean?(params[0].data, params[1].data, params[2].data))
-                        median:   @round(@dist.median?(params[0].data, params[1].data, params[2].data))
-                        mode:     @round(@dist.mode?(params[0].data, params[1].data, params[2].data))
-                        variance: @round(@dist.variance?(params[0].data, params[1].data, params[2].data))
+                        mean:     @round(@dist.mean?(params.p[0].data, params.p[1].data, params.p[2].data))
+                        median:   @round(@dist.median?(params.p[0].data, params.p[1].data, params.p[2].data))
+                        mode:     @round(@dist.mode?(params.p[0].data, params.p[1].data, params.p[2].data))
+                        variance: @round(@dist.variance?(params.p[0].data, params.p[1].data, params.p[2].data))
                 } for params in @props)
 
             return stats

@@ -20,4 +20,15 @@ module.exports =
 
           "x#{s4()}"
 
+        createParam: (name, data, min, max, step, bounded=false) ->
+            param =
+                name: name
+                data: data
+                min: min
+                max: max
+                step: step
+                bounded: bounded
+
+            return param
+
 </script>

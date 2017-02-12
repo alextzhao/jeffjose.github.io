@@ -22,117 +22,68 @@
 <script lang="coffee">
 
 Graph = require './components/Graph'
+Utils = require './utils/Utils'
 
 jstat = require 'jstat'
 
 module.exports =
   name: 'app',
   components: {Graph}
+  mixins: [Utils]
   data: () ->
     jstat: jstat
+    beta: [
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('alpha', 1.9, 0, 20, 0.01)
+            @createParam('beta', .73, 0, 10, 0.01)]
+    ]
     gamma: [
-        [
-                name: 'shape'
-                data: .5
-                min: 0
-                max: 1
-                step: 0.01
-        ,
-                name: 'scale'
-                data: 1
-                min: 0
-                max: 20
-                step: 0.01
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('shape', .5, 0, 1, 0.01)
+            @createParam('scale', 1, 0, 20, 0.01)]
     ]
     normal: [
-        [
-                name: 'mean'
-                data: .5
-                min: 0
-                max: 1
-                step: 0.01
-        ,
-                name: 'std'
-                data: .1
-                min: 0
-                max: 1
-                step: 0.01
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('mean', .5, 0, 1, 0.01)
+            @createParam('std', .1, 0, 1, 0.01)]
     ]
     poisson: [
-        [
-                name: 'lambda'
-                data: 5.5
-                min: 0
-                max: 20
-                step: 1
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('lambda', 5.5, 0, 20, 1)]
     ]
     negbin: [
-        [
-                name: 'n'
-                data: 4
-                min: 0
-                max: 10
-                step: 1
-        ,
-                name: 'p'
-                data: .3
-                min: 0
-                max: 1
-                step: 0.01
-                bounded: true
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('n', 4, 0, 10, 1)
+            @createParam('p', .3, 0, 1, 0.01, true)]
     ]
     bin: [
-        [
-                name: 'n'
-                data: 10
-                min: 0
-                max: 100
-                step: 1
-        ,
-                name: 'p'
-                data: .8
-                min: 0
-                max: 1
-                step: 0.01
-                bounded: true
-        ]
-    ]
-    beta: [
-        [
-                name: 'alpha'
-                data: 1.5
-                min: 0
-                max: 20
-                step: 0.01
-            ,
-                name: 'beta'
-                data: .73
-                min: 0
-                max: 10
-                step: 0.01
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('n', 10, 0, 100, 1)
+            @createParam('p', .8, 0, 1, 0.01, true)]
     ]
     chisq: [
-        [
-                name: 'df'
-                data: 3
-                min: 0
-                max: 40
-                step: 1
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('df', 3, 0, 40, 1)]
     ]
     exp: [
-        [
-                name: 'rate'
-                data: .4
-                min: 0
-                max: 1
-                step: .01
-        ]
+        mode: 'pdf'
+        area: false
+        p: [
+            @createParam('rate', .4, 0, 1, .01)]
     ]
 </script>
 
