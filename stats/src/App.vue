@@ -52,6 +52,7 @@ module.exports =
   mixins: [Utils]
   methods:
       getColor: () -> randomcolor('luminosity': 'dark')
+      round: (val) -> Math.round(100 * val) / 100
   data: () ->
     jstat: jstat
     themeColor: {backgroundColor: @getColor()}
@@ -102,9 +103,15 @@ module.exports =
         dots: false
         discrete: true
         connect: false
+        sync: (obj) =>
+                alpha = _.get(obj, 'p[2].data')
+                p = (alpha / (1+alpha))
+
+                obj.p[1].data = @round(p)
         p: [
-            @createParam('n', 4, 0, 10, .1)
-            @createParam('p', .3, 0, 1, 0.01, true)]
+            @createParam('r', 4, 0, 10, .1)
+            @createParam('p', .3, 0, 1, 0.01, true, true)
+            @createParam('alpha', .3, 0, 20, 0.01)]
     ]
     bin: [
         mode: 'pdf'

@@ -31,6 +31,12 @@ module.exports =
 
             samples = @getSamples()
 
+            for params in @props
+
+                if params.sync
+                    console.log('sync')
+                    params.sync(params)
+
             # Check the first props to see whether this is a 1 param, 2 param or 3 param distribution
             if @props[0].p.length is 1
                 values = (_.get(@dist, params.mode, _.noop)(x, params.p[0].data) for x in samples for params in @props)

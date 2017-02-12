@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper" @wheel.prevent="wheel($event.wheelDelta)">
+    <div :class='{noPointerEvents: readonly}'class="wrapper" @wheel.prevent="wheel($event.wheelDelta)">
       <div class="left">
           <span class="label"><p>{{label}}</p></span>
           <input class="slider" type="range" v-bind:value.number="value" v-on:input="update($event.target.value)" :min="min" :max="max" :step="step">
@@ -28,7 +28,7 @@ Utils = require '../utils/Utils'
 
 module.exports =
     name: 'slider-base'
-    props: ['label', 'value', 'max', 'min', 'step', 'bounded']
+    props: ['label', 'value', 'max', 'min', 'step', 'bounded', 'readonly']
     mixins: ['Utils']
     methods:
         round: (val) -> Math.round(100 * val) / 100
@@ -195,6 +195,19 @@ module.exports =
         .plus {
         }
     }
+}
+
+.noPointerEvents {
+    pointer-events: none;
+    cursor: pointer;
+
+	background: repeating-linear-gradient(
+	  45deg,
+      rgba(200, 200, 200, 0.6),
+      rgba(200, 200, 200, 0.6) 10px,
+      rgba(200, 200, 200, 0.1) 10px,
+      rgba(200, 200, 200, 0.1) 20px,
+	);
 }
 
 </style>

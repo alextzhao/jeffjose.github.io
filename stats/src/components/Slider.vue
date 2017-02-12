@@ -10,7 +10,7 @@
                 <i v-show='props.length > 1' @click="remove(i)" class="material-icons close">close</i>
             </div>
             <div class="all-sliders">
-                <slider-base v-for="p in prop.p" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded></slider-base>
+                <slider-base v-for="p in prop.p" v-model="p.data" :label="p.name" :min=p.min :max=p.max :step=p.step :bounded=p.bounded :readonly=p.readonly></slider-base>
             </div>
             <div class="bottom">
                 <div class="stat">mean:   <div class="val">{{stats[i].mean | clean}}    </div></div>

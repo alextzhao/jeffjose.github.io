@@ -22,7 +22,7 @@ module.exports =
 
           "x#{s4()}"
 
-        createParam: (name, data, min, max, step, bounded=false) ->
+        createParam: (name, data, min, max, step, bounded=false, readonly=false) ->
             param =
                 name: name
                 data: data
@@ -30,6 +30,7 @@ module.exports =
                 max: max
                 step: step
                 bounded: bounded
+                readonly: readonly
 
             return param
 
