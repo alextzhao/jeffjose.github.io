@@ -66,7 +66,7 @@ module.exports =
         area: false
         dots: false
         p: [
-            @createParam('shape', .5, 0, 1, 0.01)
+            @createParam('shape', .5, 0, 20, 0.01)
             @createParam('scale', 1, 0, 20, 0.01)]
     ]
     normal: [
