@@ -93,7 +93,7 @@ module.exports =
         discrete: true
         connect: false
         p: [
-            @createParam('n', 4, 0, 10, .10)
+            @createParam('n', 4, 0, 10, .1)
             @createParam('p', .3, 0, 1, 0.01, true)]
     ]
     bin: [
