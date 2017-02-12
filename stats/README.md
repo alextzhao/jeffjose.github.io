@@ -1,8 +1,8 @@
-# stats
+# Interactive Statistical Distributions
 
-> experimental viz
+http://jeffreyjose.com/stats/dist
 
-## Build Setup
+## To run locally
 
 ``` bash
 # install dependencies
@@ -15,4 +15,3 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
