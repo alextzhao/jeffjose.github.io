@@ -105,6 +105,7 @@ module.exports =
         font-size: 12px;
         padding: 0px 5px;
         width: 40px;
+        user-select: none;
 
         p {
             float: right;
@@ -119,6 +120,11 @@ module.exports =
         margin: 0px;
 
         width: 70px;
+        opacity: 0.9;
+
+        &:hover {
+            opacity: 1;
+        }
 
     }
 }

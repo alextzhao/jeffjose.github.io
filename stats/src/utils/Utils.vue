@@ -11,6 +11,8 @@ module.exports =
         colors: d3.scaleOrdinal(SCHEME)
         uuid: @getUuid() for i in [0...10]
     methods:
+
+        getColor: (tag) -> randomcolor(luminosity: tag)
         getUuid: () ->
 
           s4 = () ->

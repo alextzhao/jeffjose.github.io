@@ -4,7 +4,7 @@
             <div class="top">
                 <div class="mode" :class="{bg: prop.mode != 'cdf'}" @click="prop.mode = 'pdf'">pdf</div>
                 <div class="mode" :class="{bg: prop.mode == 'cdf'}" @click="prop.mode = 'cdf'">cdf</div>
-                <div>|</div>
+                <div class="seperator">|</div>
                 <div v-if="prop.discrete == null" class="toggle" :class="{bg: prop.area == true}" @click="prop.area = !prop.area">shade</div>
                 <div v-if="prop.discrete != null" class="toggle" :class="{bg: prop.dots == true}" @click="prop.dots = !prop.dots">points</div>
                 <i v-show='props.length > 1' @click="remove(i)" class="material-icons close">close</i>
@@ -95,13 +95,19 @@ module.exports =
             height: 19px;
             display: flex;
             padding-bottom: 5px;
+            padding-left: 2.5px;
             border-bottom: 1px solid fade(@textColorLight, 30%);
+
+            .seperator{
+                color: fade(@textColorLight, 80%);
+            }
 
             .mode, .toggle {
                 font-size: 10px;
                 color: fade(@textColorLight, 80%);
-                margin: 5px 0px 0px 5px;
+                margin: 5px 2.5px 0px 2.5px;
                 padding: 0px 3px;
+                user-select: none;
 
                 &.bg {
                     background-color: rgba(255, 255, 255, 0.2);
@@ -137,6 +143,7 @@ module.exports =
             .stat {
                 display: inline-block;
                 padding: 3px;
+                user-select: none;
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.2);
                     color: white;

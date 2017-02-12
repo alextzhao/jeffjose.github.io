@@ -1,6 +1,6 @@
 <template>
     <div class="graph panel">
-      <h1>{{ title }}</h1>
+        <h1 class="title">{{ title }}</h1>
       <slider :stats="stats" :props="props"></slider>
       <curve :values="values" :width="width" :height="height" :title="title" :discrete="discrete" :points="points" :shaded="shaded"></curve>
     </div>
@@ -75,9 +75,16 @@ module.exports =
 <style lang="less">
 @BGColor: white;
 .panel {
+    padding: 10px;
     background-color: @BGColor;
     &:hover {
         background-color: darken(@BGColor, 5%);
+    }
+
+    h1.title {
+        font-family: 'Comfortaa', sans-serif;
+        text-transform: uppercase;
+
     }
 }
 </style>

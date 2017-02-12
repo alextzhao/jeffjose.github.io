@@ -1,20 +1,36 @@
 <template>
   <div id="app">
-      <graph title="Beta Distribution" :props="beta" :dist="jstat.jStat.beta" width=800 height=400 :samples="[0, 1, 0.01]"></graph>
+      <div :style="themeColor" class="header">
+          <div class="title">INTERACTIVE STATISTICAL DISTRIBUTIONS</div>
+          <div class="madeby">
+              <a href="http://jeffreyjose.com">Made by <span>Jeffrey Jose</span></a>
+          </div>
+      </div>
 
-      <graph title="Gamma Distribution" :props="gamma" :dist="jstat.jStat.gamma" width="800" height="400" :samples="[0, 1, 0.01]"></graph>
+      <graph title="Beta Distribution" :props="beta" :dist="jstat.jStat.beta" width=1000 height=600 :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="800" height="400" :samples="[0, 1, 0.01]"></graph>
+      <graph title="Gamma Distribution" :props="gamma" :dist="jstat.jStat.gamma" width="1000" height="600" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="800" height="400" :samples="[0, 20, 1]"></graph>
+      <graph title="Normal Distribution" :props="normal" :dist="jstat.jStat.normal" width="1000" height="600" :samples="[0, 1, 0.01]"></graph>
 
-      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="800" height="400":samples="[0, 100, 1]"></graph>
+      <graph title="Poisson Distribution" :props="poisson" :dist="jstat.jStat.poisson" width="1000" height="600" :samples="[0, 20, 1]"></graph>
 
-      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="800" height="400":samples="[0, 100, 1]"></graph>
+      <graph title="Negative Binomial Distribution" :props="negbin" :dist="jstat.jStat.negbin" width="1000" height="600":samples="[0, 100, 1]"></graph>
 
-      <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="800" height="400" :samples="[0, 100, 1]"></graph>
+      <graph title="Binomial Distribution" :props="bin" :dist="jstat.jStat.binomial" width="1000" height="600":samples="[0, 100, 1]"></graph>
 
-      <graph title="Exponential Distribution" :props="exp" :dist="jstat.jStat.exponential" width="800" height="400" :samples="[0, 100, 1]"></graph>
+      <graph title="Chi-squared Distribution" :props="chisq" :dist="jstat.jStat.chisquare" width="1000" height="600" :samples="[0, 100, 1]"></graph>
+
+      <graph title="Exponential Distribution" :props="exp" :dist="jstat.jStat.exponential" width="1000" height="600" :samples="[0, 100, 1]"></graph>
+
+      <div :style="themeColor" class="footer">
+          <div class="content">
+              <p>Made by <a href="http://jeffreyjose.com">Jeffrey Jose</a>.</p>
+              <p>Statistical Distributions come from the excellent <a href="http://jstat.github.io/">jStat</a></p>
+              <p>Built using <a href="https://vuejs.org">VueJs</a> by <a href="http://evanyou.me/">Evan You</a> and <a href="https://d3js.org/">d3js</a> by <a href="https://bost.ocks.org/mike/">Mike Bostock</a>.</p>
+              <p>Proudly hosted on <a href="https://github.com/jeffjose/jeffjose.github.io/tree/master/stats">Github</a>.</p>
+          </div>
+      </div>
 
   </div>
 </template>
@@ -24,14 +40,19 @@
 Graph = require './components/Graph'
 Utils = require './utils/Utils'
 
+randomcolor = require 'randomcolor'
+
 jstat = require 'jstat'
 
 module.exports =
   name: 'app',
   components: {Graph}
   mixins: [Utils]
+  methods:
+      getColor: () -> randomcolor('luminosity': 'dark')
   data: () ->
     jstat: jstat
+    themeColor: {backgroundColor: @getColor()}
     beta: [
         mode: 'pdf'
         area: false
@@ -101,7 +122,9 @@ module.exports =
     ]
 </script>
 
-<style lang="less">
+<style scoped lang="less">
+@textColor: rgba(0, 0, 0, 0.8);
+@textColor: rgba(255, 255, 255, 0.5);
 
     @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
@@ -111,13 +134,12 @@ module.exports =
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
       color: #2c3e50;
-      margin-top: 60px;
     }
 
     // For material icons
     // .. from http://google.github.io/material-design-icons/
 
-    @import url('https://fonts.googleapis.com/css?family=Material+Icons');
+    @import url('https://fonts.googleapis.com/css?family=Poiret+One|Comfortaa|Material+Icons');
 
     .material-icons {
       font-family: 'Material Icons';
@@ -142,5 +164,74 @@ module.exports =
 
       /* Support for IE. */
       font-feature-settings: 'liga';
+    }
+
+
+
+    .header {
+        height: 60px;
+        width: 100%;
+        background-color: red;
+        display: flex;
+        flex-flow: row nowrap;
+
+        .title {
+            color: white;
+            font-size: 24px;
+            padding: 10px;
+            margin: auto 0px;
+            font-family: 'Poiret One', sans-serif;
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+
+        .madeby {
+            transition: all ease-in-out 100ms;
+            margin: auto 10px auto auto;
+            color: @textColor;
+            line-height: 20px;
+
+            span, a {
+                color: @textColor;
+                text-decoration: none;
+                transition: all ease-in-out 100ms;
+            }
+
+            &:hover {
+
+                color: white;
+
+                span, a {
+                    color: white;
+                }
+            }
+        }
+
+
+    }
+
+    .footer {
+        height: 150px;
+        display: flex;
+
+        .content {
+            margin: auto;
+            width: 80%;
+            height: 200px;
+            color: @textColor;
+            line-height: 15px;
+
+            a {
+                transition: all ease-in-out 100ms;
+                text-decoration: none;
+                color: @textColor;
+                border-bottom: 1px solid @textColor;
+
+                &:hover {
+                    color: white;
+                    border-bottom: 1px solid white;
+                }
+            }
+        }
     }
 </style>
